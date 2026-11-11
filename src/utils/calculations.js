@@ -343,8 +343,14 @@ export function generateCommercialDescription({ shape, metal, inputs, results })
     dimStr = `Ext ø${formatVal(inputs.diametro_externo)} x Int ø${formatVal(inputs.diametro_interno)} x ${formatVal(inputs.comprimento)}`;
   } else if (shape.id === 'barra_quadrada') {
     dimStr = `${formatVal(inputs.lado)} x ${formatVal(inputs.comprimento)}`;
+  } else if (shape.id === 'barra_retangular_chata') {
+    dimStr = `L ${formatVal(inputs.largura)} x e ${formatVal(inputs.espessura)} x C ${formatVal(inputs.comprimento)}`;
+  } else if (shape.id === 'barra_sextavada') {
+    dimStr = `Sext. ${formatVal(inputs.bitola)} (entre faces) x ${formatVal(inputs.comprimento)}`;
   } else if (shape.id === 'tubo_quadrado') {
     dimStr = `${formatVal(inputs.lado)} x Parede ${formatVal(inputs.parede)} x ${formatVal(inputs.comprimento)}`;
+  } else if (shape.id === 'tubo_retangular') {
+    dimStr = `${formatVal(inputs.lado_maior)} x ${formatVal(inputs.lado_menor)} x Parede ${formatVal(inputs.parede)} x ${formatVal(inputs.comprimento)}`;
   } else if (shape.id === 'perfil_l_cantoneira') {
     const hasAbaB = inputs.aba_b && parseDimensionValue(inputs.aba_b) > 0;
     if (hasAbaB) {
@@ -359,7 +365,8 @@ export function generateCommercialDescription({ shape, metal, inputs, results })
   } else if (shape.id === 'perfil_i_h') {
     dimStr = `H ${formatVal(inputs.altura)} x B ${formatVal(inputs.largura_aba)} x tw ${formatVal(inputs.espessura_alma)} x tf ${formatVal(inputs.espessura_aba)} x C ${formatVal(inputs.comprimento)}`;
   } else {
-    dimStr = Object.values(inputs).map(v => formatVal(v)).join(' x ');
+    // Só os campos da geometria, na ordem dela (inputs pode ter extras, ex: aba_b)
+    dimStr = shape.inputs.map(f => formatVal(inputs[f.id])).join(' x ');
   }
 
   return `${qty}x ${shape.name} ${metal.name} - ${dimStr} | Peso Est.: ${formatWeight(results.totalWeightKg)} kg`;
