@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from 'react';
+import React, { useId } from 'react';
 
 import { Sliders, AlertTriangle } from 'lucide-react';
 import { parseDimensionValue, isImperialInput, isAmbiguousThousands } from '../utils/calculations';
@@ -62,6 +62,8 @@ export default function CalculatorForm({
   shape,
   inputs,
   onInputChange,
+  abaDesigual = false,
+  onAbaDesigualChange,
   quantity,
   onQuantityChange,
   lossMarginPct,
@@ -70,29 +72,7 @@ export default function CalculatorForm({
   setActiveField,
   errors = {}
 }) {
-  // ── Estado local: aba desigual para Perfil L / Cantoneira
-  const [abaDesigual, setAbaDesigual] = useState(false);
-  const shapeId = shape?.id;
-
-  // Reseta quando o shape muda (saímos do Perfil L)
-  useEffect(() => {
-    if (shapeId !== 'perfil_l_cantoneira') {
-      setAbaDesigual(false);
-    } else if (!abaDesigual) {
-      // Garante que aba_b seja limpa ao entrar no shape sem o toggle ativo
-      onInputChange('aba_b', '');
-    }
-  }, [shapeId]); // eslint-disable-line react-hooks/exhaustive-deps
-
   if (!shape) return null;
-
-  const handleAbaDesigualToggle = (checked) => {
-    setAbaDesigual(checked);
-    if (!checked) {
-      // Desmarcou: limpa aba_b para que o cálculo use aba simétrica (B = A)
-      onInputChange('aba_b', '');
-    }
-  };
 
   // Ao sair do campo, medida em polegadas (1/2, 1 1/2, 2", 2in) vira mm.
   // 3 casas para não alterar o peso já exibido durante a digitação
@@ -161,7 +141,7 @@ export default function CalculatorForm({
                 type="checkbox"
                 className="sr-only"
                 checked={abaDesigual}
-                onChange={(e) => handleAbaDesigualToggle(e.target.checked)}
+                onChange={(e) => onAbaDesigualChange(e.target.checked)}
               />
               <div className="toggle-row__box" aria-hidden="true">
                 {abaDesigual && (

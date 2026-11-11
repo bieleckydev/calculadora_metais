@@ -26,6 +26,16 @@ export default function App() {
   const [quantity, setQuantity] = useState(1);
   const [lossMarginPct, setLossMarginPct] = useState('');
 
+  // Cantoneira de abas desiguais: com o toggle ligado, a aba B é obrigatória
+  const [abaDesigual, setAbaDesigual] = useState(false);
+  const usesAbaB = selectedShape.id === 'perfil_l_cantoneira' && abaDesigual;
+
+  const handleAbaDesigualChange = (checked) => {
+    setAbaDesigual(checked);
+    // Desligado: limpa a aba B para o cálculo voltar a usar B = A
+    if (!checked) setInputs(prev => ({ ...prev, aba_b: '' }));
+  };
+
   // Ao trocar a família, a liga passa a ser a primeira da nova família,
   // para o cálculo usar a mesma densidade que o select mostra
   const handleSelectFamily = (family) => {
@@ -37,6 +47,7 @@ export default function App() {
   // Handle shape change (reset inputs to empty strings)
   const handleSelectShape = (shape) => {
     setSelectedShape(shape);
+    setAbaDesigual(false);
     const newInputs = {};
     shape.inputs.forEach(f => {
       newInputs[f.id] = '';
@@ -59,9 +70,10 @@ export default function App() {
       inputs,
       densityGcm3: selectedMetal.density,
       quantity,
-      lossMarginPct
+      lossMarginPct,
+      extraFieldIds: usesAbaB ? ['aba_b'] : []
     });
-  }, [selectedShape, inputs, selectedMetal, quantity, lossMarginPct]);
+  }, [selectedShape, inputs, selectedMetal, quantity, lossMarginPct, usesAbaB]);
 
   return (
     <div className="app">
@@ -94,6 +106,8 @@ export default function App() {
             shape={selectedShape}
             inputs={inputs}
             onInputChange={handleInputChange}
+            abaDesigual={abaDesigual}
+            onAbaDesigualChange={handleAbaDesigualChange}
             quantity={quantity}
             onQuantityChange={setQuantity}
             lossMarginPct={lossMarginPct}

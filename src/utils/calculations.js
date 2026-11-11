@@ -124,21 +124,26 @@ export function validatePhysicalConstraints(shapeId, inputs) {
     }
   }
 
+  // Cada regra só é avaliada quando os campos que ela compara estão
+  // preenchidos; campo vazio não pode gerar erro físico
   if (shapeId === 'tubo_retangular') {
     const A = convert(inputs.lado_maior);
     const B = convert(inputs.lado_menor);
     const parede = convert(inputs.parede);
-    if (parede > 0 && (parede * 2 >= A || parede * 2 >= B)) {
-      errors.parede = 'A parede excede os limites físicos do perfil retangular';
+    if (parede > 0 && ((A > 0 && parede * 2 >= A) || (B > 0 && parede * 2 >= B))) {
+      errors.parede = 'O dobro da parede deve ser menor que os dois lados (A e B)';
     }
   }
 
   if (shapeId === 'perfil_l_cantoneira') {
     const aba = convert(inputs.aba);
-    const aba_b = convert(inputs.aba_b) > 0 ? convert(inputs.aba_b) : aba;
+    const aba_b = convert(inputs.aba_b);
     const espessura = convert(inputs.espessura);
-    if (espessura > 0 && aba > 0 && (espessura >= aba || espessura >= aba_b)) {
-      errors.espessura = 'A espessura deve ser menor que a largura de ambas as abas (A e B)';
+    if (espessura > 0 && aba > 0 && espessura >= aba) {
+      errors.espessura = 'A espessura deve ser menor que a largura da aba A';
+    }
+    if (espessura > 0 && aba_b > 0 && espessura >= aba_b) {
+      errors.aba_b = 'A aba B deve ser maior que a espessura';
     }
   }
 
@@ -146,7 +151,7 @@ export function validatePhysicalConstraints(shapeId, inputs) {
     const mesa = convert(inputs.mesa);
     const altura = convert(inputs.altura);
     const espessura = convert(inputs.espessura);
-    if (espessura > 0 && (espessura >= mesa || espessura >= altura)) {
+    if (espessura > 0 && ((mesa > 0 && espessura >= mesa) || (altura > 0 && espessura >= altura))) {
       errors.espessura = 'A espessura deve ser menor que a mesa e a altura do perfil T';
     }
   }
@@ -155,7 +160,7 @@ export function validatePhysicalConstraints(shapeId, inputs) {
     const altura = convert(inputs.altura);
     const aba = convert(inputs.aba);
     const espessura = convert(inputs.espessura);
-    if (espessura > 0 && (espessura * 2 >= altura || espessura >= aba)) {
+    if (espessura > 0 && ((altura > 0 && espessura * 2 >= altura) || (aba > 0 && espessura >= aba))) {
       errors.espessura = 'A espessura não pode exceder metade da altura da alma ou a largura da aba';
     }
   }
@@ -189,7 +194,8 @@ export function calculateMetalWeight({
   densityGcm3,
   pricePerKg = 0,
   quantity = 1,
-  lossMarginPct = 0
+  lossMarginPct = 0,
+  extraFieldIds = []
 }) {
   if (!shape || typeof shape.calculateVolumeMm3 !== 'function') {
     return {
@@ -209,10 +215,22 @@ export function calculateMetalWeight({
   // envolvidos são preenchidos, sem esperar os demais
   const physicalCheck = validatePhysicalConstraints(shape.id, inputs);
 
-  const missingInputs = shape.inputs.some(f => {
-    const val = inputs[f.id];
-    return val === undefined || val === null || val === '' || !(parseDimensionValue(val) > 0);
+  // Campos obrigatórios: os da geometria e os opcionais ativados pela tela
+  // (ex: aba B da cantoneira com "Aba Desigual" marcado)
+  const requiredIds = [...shape.inputs.map(f => f.id), ...extraFieldIds];
+  const isEmpty = (val) => val === undefined || val === null || String(val).trim() === '';
+
+  // Texto preenchido que não é uma medida positiva ganha erro no próprio campo
+  const inputErrors = {};
+  requiredIds.forEach(id => {
+    const val = inputs[id];
+    if (!isEmpty(val) && !(parseDimensionValue(val) > 0)) {
+      inputErrors[id] = 'Valor inválido: use um número positivo (ex: 12,7) ou polegadas (ex: 1/2")';
+    }
   });
+  const fieldErrors = { ...physicalCheck.errors, ...inputErrors };
+
+  const missingInputs = requiredIds.some(id => isEmpty(inputs[id]) || !(parseDimensionValue(inputs[id]) > 0));
 
   if (missingInputs) {
     return {
@@ -224,7 +242,7 @@ export function calculateMetalWeight({
       totalPrice: 0,
       quantity: Math.max(1, parseInt(quantity) || 1),
       isValid: false,
-      errors: physicalCheck.errors
+      errors: fieldErrors
     };
   }
 
