@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useId } from 'react';
 
 import { Sliders, AlertTriangle } from 'lucide-react';
-import { parseDimensionValue } from '../utils/calculations';
+import { parseDimensionValue, isImperialInput, isAmbiguousThousands } from '../utils/calculations';
+
+const formatMm = (mm) => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 3 }).format(mm);
 
 /**
  * Campo numérico com unidade fixa à direita (mm, peças, %)
@@ -92,18 +94,26 @@ export default function CalculatorForm({
     }
   };
 
-  // Helper for input blur conversion & feedback
+  // Ao sair do campo, medida em polegadas (1/2, 1 1/2, 2", 2in) vira mm.
+  // 3 casas para não alterar o peso já exibido durante a digitação
   const handleBlur = (fieldId, val) => {
     setActiveField(null);
-    if (!val || typeof val !== 'string') return;
+    if (!isImperialInput(val)) return;
 
-    // Se digitou fração em polegadas (ex: 1/2 ou 1 1/2) ou com aspas (ex: 2"), auto-converte para mm ao sair do campo
-    if (val.includes('/') || val.includes('"') || val.toLowerCase().includes('in')) {
-      const convertedMm = parseDimensionValue(val);
-      if (convertedMm > 0) {
-        onInputChange(fieldId, Number(convertedMm.toFixed(2)).toString());
-      }
+    const convertedMm = parseDimensionValue(val);
+    if (convertedMm > 0) {
+      onInputChange(fieldId, Number(convertedMm.toFixed(3)).toString());
     }
+  };
+
+  // Dica ao lado do rótulo: mostra em mm o que foi entendido quando a
+  // entrada está em polegadas ou parece milhar ("1.000" = 1 mm)
+  const dimensionHint = (rawVal) => {
+    const mm = parseDimensionValue(rawVal);
+    if (!(mm > 0)) return null;
+    if (isImperialInput(rawVal)) return `= ${formatMm(mm)} mm`;
+    if (isAmbiguousThousands(rawVal)) return `= ${formatMm(mm)} mm (ponto é decimal)`;
+    return null;
   };
 
   const dimensionProps = (fieldId) => ({
@@ -124,21 +134,19 @@ export default function CalculatorForm({
           <Sliders size={18} />
           Dimensões <span className="panel__title-sub">· {shape.name}</span>
         </h2>
-        <p className="panel__help">Em mm. Também aceita polegadas: 1/2, 1 1/2 ou 2"</p>
+        <p className="panel__help">Em mm. Também aceita polegadas: 1/2, 1 1/2, 2" ou 2in</p>
       </div>
 
       <div className="field-grid">
         {shape.inputs.map((field) => {
           const rawVal = inputs[field.id] !== undefined ? inputs[field.id] : '';
-          const isFraction = typeof rawVal === 'string' && (rawVal.includes('/') || rawVal.includes('"'));
-          const liveMm = isFraction ? parseDimensionValue(rawVal) : null;
 
           return (
             <UnitField
               key={field.id}
               label={field.label}
               unit={field.unit || 'mm'}
-              hint={isFraction && liveMm > 0 ? `= ${liveMm.toFixed(2)} mm` : null}
+              hint={dimensionHint(rawVal)}
               error={errors[field.id]}
               {...dimensionProps(field.id)}
             />

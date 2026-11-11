@@ -2,47 +2,80 @@
  * Utilitários de Cálculo de Peso Teórico de Metais, Conversão Automática de Frações em Polegadas para mm e Guardrails Físicos
  */
 
+const MM_PER_INCH = 25.4;
+
 /**
- * Identifica e converte automaticamente frações em polegadas (ex: "1/2", "1 1/2", "3/8", '1/2"') para milímetros (mm)
+ * Lê um número decimal aceitando vírgula ou ponto. Com os dois separadores,
+ * o último é o decimal ("1.250,5" e "1,250.5" valem 1250,5). Só com ponto,
+ * o ponto é decimal ("1.000" = 1). Qualquer outro texto devolve NaN.
+ */
+function parseDecimal(text) {
+  let t = text;
+  if (t.includes(',') && t.includes('.')) {
+    const decimalSep = t.lastIndexOf(',') > t.lastIndexOf('.') ? ',' : '.';
+    const thousandSep = decimalSep === ',' ? '.' : ',';
+    t = t.split(thousandSep).join('').replace(decimalSep, '.');
+  } else {
+    t = t.replace(',', '.');
+  }
+  if (!/^(\d+(\.\d*)?|\.\d+)$/.test(t)) return NaN;
+  return Number(t);
+}
+
+/**
+ * Interpreta o texto digitado num campo de medida.
+ * Devolve { mm, isInches }: mm é NaN quando o texto não é uma medida válida.
+ * Aceita: 12.7 / 12,7 / 6000mm (mm) · 1/2, 1 1/2, 1-1/2 (polegadas) ·
+ * 2", 2in, 2pol, 1/2in, 1 1/2" (polegadas com unidade)
+ */
+function parseDimension(raw) {
+  let text = raw.trim().toLowerCase();
+
+  let isInches = false;
+  const unit = text.match(/\s*(mm|"|''|in|pol\.?|polegadas?)$/);
+  if (unit) {
+    isInches = unit[1] !== 'mm';
+    text = text.slice(0, unit.index).trim();
+  }
+
+  // Fração é sempre polegada: "1/2", "1 1/2", "1-1/2"
+  const fraction = text.match(/^(?:(\d+)[\s-]+)?(\d+)\/(\d+)$/);
+  if (fraction) {
+    const den = Number(fraction[3]);
+    if (den === 0) return { mm: NaN, isInches: true };
+    const inches = Number(fraction[1] || 0) + Number(fraction[2]) / den;
+    return { mm: inches * MM_PER_INCH, isInches: true };
+  }
+
+  const num = parseDecimal(text);
+  if (!Number.isFinite(num)) return { mm: NaN, isInches };
+  return { mm: isInches ? num * MM_PER_INCH : num, isInches };
+}
+
+/**
+ * Converte o valor de um campo de medida para mm.
+ * Vazio → 0; texto que não é medida (ex: "abc", "-5", "1 000") → NaN.
  */
 export function parseDimensionValue(inputVal) {
-  if (typeof inputVal === 'number') return inputVal;
-  if (!inputVal || typeof inputVal !== 'string') return 0;
+  if (typeof inputVal === 'number') return Number.isFinite(inputVal) ? inputVal : NaN;
+  if (typeof inputVal !== 'string' || inputVal.trim() === '') return 0;
+  return parseDimension(inputVal).mm;
+}
 
-  const clean = inputVal.trim().replace(/"/g, '').replace(/,/g, '.');
-  if (clean === '') return 0;
+/**
+ * Indica se o texto foi digitado em polegadas (fração ou com ", in, pol)
+ */
+export function isImperialInput(inputVal) {
+  if (typeof inputVal !== 'string' || inputVal.trim() === '') return false;
+  return parseDimension(inputVal).isInches;
+}
 
-  // Se for fração composta em polegadas (ex: "1 1/2" ou "2 3/4")
-  const compoundMatch = clean.match(/^(\d+)\s+(\d+)\/(\d+)$/);
-  if (compoundMatch) {
-    const whole = parseFloat(compoundMatch[1]);
-    const num = parseFloat(compoundMatch[2]);
-    const den = parseFloat(compoundMatch[3]);
-    if (den !== 0) {
-      const inches = whole + (num / den);
-      return inches * 25.4; // Auto-converte fração de polegada para mm
-    }
-  }
-
-  // Se for fração simples em polegadas (ex: "1/2", "3/8", "1/4", "3/4")
-  const simpleMatch = clean.match(/^(\d+)\/(\d+)$/);
-  if (simpleMatch) {
-    const num = parseFloat(simpleMatch[1]);
-    const den = parseFloat(simpleMatch[2]);
-    if (den !== 0) {
-      const inches = num / den;
-      return inches * 25.4; // Auto-converte fração de polegada para mm
-    }
-  }
-
-  // Se o usuário digitou número com aspas indicando polegadas (ex: 2" ou 1.5")
-  if (inputVal.includes('"') || inputVal.toLowerCase().includes('in')) {
-    const num = parseFloat(clean);
-    return !isNaN(num) ? num * 25.4 : 0;
-  }
-
-  // Se for decimal simples (ex: "12.7" ou "50") -> Já está em mm
-  return parseFloat(clean) || 0;
+/**
+ * Indica se o texto é um número com ponto que pode ter sido digitado como
+ * milhar ("1.000", "2.500"): para o sistema o ponto é decimal
+ */
+export function isAmbiguousThousands(inputVal) {
+  return typeof inputVal === 'string' && /^\s*\d{1,3}\.\d{3}\s*(mm)?\s*$/i.test(inputVal);
 }
 
 /**
@@ -178,7 +211,7 @@ export function calculateMetalWeight({
 
   const missingInputs = shape.inputs.some(f => {
     const val = inputs[f.id];
-    return val === undefined || val === null || val === '' || parseDimensionValue(val) <= 0;
+    return val === undefined || val === null || val === '' || !(parseDimensionValue(val) > 0);
   });
 
   if (missingInputs) {
