@@ -114,7 +114,7 @@ export default function App() {
 
       <main className="app-main">
         {/* Row 1: Geometry selector | Technical diagram */}
-        <div className="app-row">
+        <div className="app-row app-row--top">
           <ShapeSelector
             selectedShape={selectedShape}
             onSelectShape={handleSelectShape}
@@ -129,7 +129,7 @@ export default function App() {
         </div>
 
         {/* Row 2: Dimension inputs | Weight results */}
-        <div className="app-row">
+        <div className="app-row app-row--bottom">
           <CalculatorForm
             shape={selectedShape}
             inputs={inputs}
@@ -159,6 +159,7 @@ export default function App() {
         onCancel={handleCancel}
         onInject={handleInjectOrder}
         isValid={results.isValid}
+        totalWeightKg={results.totalWeightKg}
         notice={notice}
       />
     </div>

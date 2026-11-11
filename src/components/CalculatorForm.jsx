@@ -108,6 +108,8 @@ export default function CalculatorForm({
 
   const dimensionProps = (fieldId) => ({
     type: 'text',
+    inputMode: 'decimal',
+    autoComplete: 'off',
     placeholder: '0.00 ou 1/2"',
     value: inputs[fieldId] !== undefined ? inputs[fieldId] : '',
     onChange: (val) => onInputChange(fieldId, val),
@@ -184,6 +186,7 @@ export default function CalculatorForm({
           label="Quantidade"
           unit="peças"
           type="number"
+          inputMode="numeric"
           min="1"
           value={quantity}
           onChange={onQuantityChange}
@@ -193,6 +196,7 @@ export default function CalculatorForm({
           label="Margem Perda (%)"
           unit="%"
           type="number"
+          inputMode="decimal"
           min="0"
           step="any"
           value={lossMarginPct}
