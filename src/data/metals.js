@@ -25,7 +25,7 @@ export const DENSIDADES = {
   // Outros Metais e Ligas Industriais
   "chumbo": 11.34,
   "estanho": 7.31,
-  "magnésio": 1.74,
+  "magnesio": 1.74,
   "niquel": 8.90,
   "ouro": 19.32,
   "prata": 10.49,
@@ -75,7 +75,7 @@ export const METALS_METADATA = [
   // Outros Metais e Ligas Industriais
   { id: 'chumbo', name: 'Chumbo (Pb)', category: 'Outros Metais Industriais', description: 'Metal pesado macio usado em proteção radiológica e contrapesos.' },
   { id: 'estanho', name: 'Estanho (Sn)', category: 'Outros Metais Industriais', description: 'Metal maleável usado em soldas elétricas e revestimentos.' },
-  { id: 'magnésio', name: 'Magnésio (Mg)', category: 'Outros Metais Industriais', description: 'Metal estrutural mais leve existente na indústria.' },
+  { id: 'magnesio', name: 'Magnésio (Mg)', category: 'Outros Metais Industriais', description: 'Metal estrutural mais leve existente na indústria.' },
   { id: 'niquel', name: 'Níquel (Ni)', category: 'Outros Metais Industriais', description: 'Metal resistente a altas temperaturas e meio corrosivo.' },
   { id: 'ouro', name: 'Ouro Puro 24k (Au)', category: 'Outros Metais Industriais', description: 'Metal precioso inoxidável de altíssima densidade.' },
   { id: 'prata', name: 'Prata Pura (Ag)', category: 'Outros Metais Industriais', description: 'Maior condutividade elétrica e térmica de todos os metais.' },
