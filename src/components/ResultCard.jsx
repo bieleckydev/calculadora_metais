@@ -55,23 +55,23 @@ export default function ResultCard({
       {/* Primary Weight Display Card */}
       <div className="glass-card" style={{ padding: '1.5rem', background: 'var(--bg-surface)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            PESO UNITÁRIO
+          <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+            Peso unitário
           </span>
         </div>
 
         {/* Unit Weight */}
-        <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', lineHeight: 1 }}>
+        <div className="num" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1 }}>
           {isValid ? formatNumber(weightKg, 2) : '--.--'} <span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 500 }}>kg/pç</span>
         </div>
 
         <div style={{ borderTop: '1px solid var(--border-color)', margin: '1.25rem 0 1rem 0' }} />
 
         {/* Total Weight */}
-        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          PESO TOTAL BRUTO
+        <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+          Peso total bruto
         </span>
-        <div style={{ fontSize: '3.2rem', fontWeight: 800, color: 'var(--accent-copper)', fontFamily: 'var(--font-display)', lineHeight: 1.1, marginTop: '0.2rem' }}>
+        <div className="num" style={{ fontSize: '3rem', fontWeight: 700, color: 'var(--accent-copper)', letterSpacing: '-0.02em', lineHeight: 1.1, marginTop: '0.2rem' }}>
           {isValid ? formatNumber(totalWeightKg, 2) : '--.--'} <span style={{ fontSize: '1.3rem', color: 'var(--text-muted)', fontWeight: 600 }}>kg</span>
         </div>
       </div>
@@ -87,7 +87,7 @@ export default function ResultCard({
         justifyContent: 'space-between',
         gap: '0.85rem'
       }}>
-        <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', fontFamily: 'monospace', lineHeight: 1.4 }}>
+        <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', lineHeight: 1.45 }}>
           {commercialDesc}
         </div>
 

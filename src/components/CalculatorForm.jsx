@@ -39,8 +39,6 @@ export default function CalculatorForm({
     }
   };
 
-  const titleShapeName = shape.name.toUpperCase();
-
   // Helper for input blur conversion & feedback
   const handleBlur = (fieldId, val) => {
     setActiveField(null);
@@ -67,8 +65,8 @@ export default function CalculatorForm({
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <Sliders size={18} color="var(--accent-blue)" />
-          <h3 style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
-            DIMENSÕES ({titleShapeName})
+          <h3 style={{ fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 600 }}>
+            Dimensões <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>· {shape.name}</span>
           </h3>
         </div>
       </div>

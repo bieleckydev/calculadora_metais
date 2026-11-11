@@ -6,7 +6,7 @@ import { LayoutGrid } from 'lucide-react';
  * Renderizador de Ícones Vetoriais das Seções Transversais de Geometria
  */
 function GeometryVectorIcon({ shapeId, isSelected }) {
-  const stroke = isSelected ? '#B87333' : '#5A6070';
+  const stroke = isSelected ? 'var(--accent-copper)' : 'var(--text-muted)';
 
   switch (shapeId) {
     case 'chapa_bloco_retalho':
@@ -135,8 +135,8 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <LayoutGrid size={18} color="var(--accent-blue)" />
-          <h3 style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
-            GEOMETRIA DO PERFIL
+          <h3 style={{ fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 600 }}>
+            Geometria do perfil
           </h3>
         </div>
 
@@ -148,14 +148,14 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
               onClick={() => setSelectedCategory(cat.id)}
               style={{
                 background: selectedCategory === cat.id ? 'var(--accent-copper)' : 'rgba(255, 255, 255, 0.04)',
-                color: selectedCategory === cat.id ? '#fff' : 'var(--text-muted)',
+                color: selectedCategory === cat.id ? 'var(--text-on-accent)' : 'var(--text-secondary)',
                 border: 'none',
                 padding: '0.3rem 0.65rem',
                 borderRadius: '6px',
                 fontSize: '0.78rem',
                 fontWeight: 700,
                 cursor: 'pointer',
-                transition: 'all 0.15s ease'
+                transition: 'background-color 0.15s ease, color 0.15s ease'
               }}
             >
               {cat.label}
@@ -195,33 +195,20 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
               onClick={() => onSelectShape(shape)}
               style={{
                 background: isSelected ? 'rgba(184, 115, 51, 0.10)' : 'rgba(255, 255, 255, 0.02)',
-                border: isSelected ? '2px solid #B87333' : '1px solid var(--border-color)',
+                border: `1px solid ${isSelected ? 'var(--accent-copper)' : 'var(--border-color)'}`,
                 borderRadius: '12px',
                 padding: '1rem 0.65rem',
                 cursor: 'pointer',
-                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'background-color 0.2s ease, border-color 0.2s ease',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '0.65rem',
                 position: 'relative',
-                boxShadow: isSelected ? '0 0 14px rgba(184, 115, 51, 0.20)' : 'none'
+                boxShadow: isSelected ? 'inset 0 0 0 1px var(--accent-copper)' : 'none'
               }}
             >
-              {isSelected && (
-                <div style={{
-                  position: 'absolute',
-                  top: '6px',
-                  right: '6px',
-                  width: '7px',
-                  height: '7px',
-                  borderRadius: '50%',
-                  background: '#B87333',
-                  boxShadow: '0 0 6px #B87333'
-                }} />
-              )}
-
               <GeometryVectorIcon shapeId={shape.id} isSelected={isSelected} />
 
               <span style={{

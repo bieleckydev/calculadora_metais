@@ -596,8 +596,8 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <Box size={16} color="var(--accent-blue)" />
-          <h4 style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
-            ESQUEMA TÉCNICO 3D
+          <h4 style={{ fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 600 }}>
+            Esquema técnico
           </h4>
         </div>
 
