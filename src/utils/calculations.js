@@ -228,11 +228,22 @@ export function calculateMetalWeight({
       inputErrors[id] = 'Valor inválido: use um número positivo (ex: 12,7) ou polegadas (ex: 1/2")';
     }
   });
+  // Quantidade: inteiro a partir de 1. Margem: vazio = 0, nunca negativa
+  // (antes 2,5 peças virava 2 sem aviso e margem -50% reduzia o peso)
+  const qtyNum = Number(String(quantity ?? '').trim().replace(',', '.'));
+  if (isEmpty(quantity) || !Number.isInteger(qtyNum) || qtyNum < 1) {
+    inputErrors.quantidade = 'Informe uma quantidade inteira a partir de 1';
+  }
+  const marginNum = isEmpty(lossMarginPct) ? 0 : Number(String(lossMarginPct).trim().replace(',', '.'));
+  if (!Number.isFinite(marginNum) || marginNum < 0) {
+    inputErrors.margem = 'A margem de perda deve ser 0% ou maior';
+  }
+
   const fieldErrors = { ...physicalCheck.errors, ...inputErrors };
 
   const missingInputs = requiredIds.some(id => isEmpty(inputs[id]) || !(parseDimensionValue(inputs[id]) > 0));
 
-  if (missingInputs) {
+  if (missingInputs || inputErrors.quantidade || inputErrors.margem) {
     return {
       volumeMm3: 0,
       volumeCm3: 0,
@@ -283,8 +294,8 @@ export function calculateMetalWeight({
 
   const volumeCm3 = volumeMm3 / 1000;
   const rho = parseFloat(densityGcm3) || 0;
-  const qty = Math.max(1, parseInt(quantity) || 1);
-  const lossFactor = 1 + (parseFloat(lossMarginPct) || 0) / 100;
+  const qty = qtyNum;
+  const lossFactor = 1 + marginNum / 100;
   
   const weightKg = (volumeMm3 * rho) / 1000000;
   const totalWeightKg = weightKg * qty * lossFactor;
@@ -296,7 +307,7 @@ export function calculateMetalWeight({
     volumeCm3,
     densityGcm3: rho,
     quantity: qty,
-    lossMarginPct: parseFloat(lossMarginPct) || 0,
+    lossMarginPct: marginNum,
     weightKg,
     totalWeightKg,
     totalPrice,

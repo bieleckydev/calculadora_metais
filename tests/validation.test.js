@@ -34,3 +34,18 @@ test('cantoneira com aba desigual exige a aba B', () => {
   assert.ok(curta.errors.aba_b);
   assert.equal(curta.errors.espessura, undefined);
 });
+
+test('quantidade precisa ser inteira e ≥ 1; margem não pode ser negativa', () => {
+  const base = { lado: '10', comprimento: '1000' };
+  for (const quantity of ['2.5', '-3', '0', '']) {
+    const r = calc('barra_quadrada', base, { quantity });
+    assert.equal(r.isValid, false, `quantidade "${quantity}"`);
+    assert.ok(r.errors.quantidade);
+  }
+  assert.equal(calc('barra_quadrada', base, { quantity: '3' }).quantity, 3);
+
+  const neg = calc('barra_quadrada', base, { lossMarginPct: '-50' });
+  assert.equal(neg.isValid, false);
+  assert.ok(neg.errors.margem);
+  assert.equal(calc('barra_quadrada', base, { lossMarginPct: '' }).isValid, true);
+});

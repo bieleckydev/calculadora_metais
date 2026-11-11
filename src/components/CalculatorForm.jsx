@@ -175,8 +175,10 @@ export default function CalculatorForm({
           type="number"
           inputMode="numeric"
           min="1"
+          step="1"
           value={quantity}
           onChange={onQuantityChange}
+          error={errors.quantidade}
         />
 
         <UnitField
@@ -188,6 +190,7 @@ export default function CalculatorForm({
           step="any"
           value={lossMarginPct}
           onChange={onLossMarginChange}
+          error={errors.margem}
         />
       </div>
     </section>
