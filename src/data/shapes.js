@@ -8,6 +8,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "chapa_bloco_retalho",
       "nome": "Chapa / Bloco / Retalho",
+      "nome_curto": "Chapa",
       "categoria": "chapa",
       "icon": "Layers",
       "variaveis_entrada": [
@@ -21,6 +22,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "bobina",
       "nome": "Bobina / Tira / Fita",
+      "nome_curto": "Bobina / Fita",
       "categoria": "chapa",
       "icon": "Disc",
       "variaveis_entrada": [
@@ -34,6 +36,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "barra_redonda_tarugo",
       "nome": "Barra Redonda / Tarugo",
+      "nome_curto": "Redonda",
       "categoria": "barra",
       "icon": "Circle",
       "variaveis_entrada": [
@@ -46,6 +49,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "barra_quadrada",
       "nome": "Barra Quadrada",
+      "nome_curto": "Quadrada",
       "categoria": "barra",
       "icon": "Square",
       "variaveis_entrada": [
@@ -58,6 +62,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "barra_retangular_chata",
       "nome": "Barra Retangular / Chata",
+      "nome_curto": "Barra Chata",
       "categoria": "barra",
       "icon": "RectangleHorizontal",
       "variaveis_entrada": [
@@ -71,6 +76,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "barra_sextavada",
       "nome": "Barra Sextavada",
+      "nome_curto": "Sextavada",
       "categoria": "barra",
       "icon": "Hexagon",
       "variaveis_entrada": [
@@ -83,6 +89,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "tubo_redondo",
       "nome": "Tubo Redondo",
+      "nome_curto": "Tubo Red.",
       "categoria": "tubo",
       "icon": "Disc",
       "variaveis_entrada": [
@@ -96,6 +103,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "bucha_tubo_mecanico",
       "nome": "Bucha / Tubo Mecânico",
+      "nome_curto": "Bucha / Tubo",
       "categoria": "tubo",
       "icon": "CircleDot",
       "variaveis_entrada": [
@@ -109,6 +117,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "tubo_quadrado",
       "nome": "Tubo Quadrado",
+      "nome_curto": "Tubo Quad.",
       "categoria": "tubo",
       "icon": "Box",
       "variaveis_entrada": [
@@ -122,6 +131,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "tubo_retangular",
       "nome": "Tubo Retangular",
+      "nome_curto": "Tubo Ret.",
       "categoria": "tubo",
       "icon": "Maximize2",
       "variaveis_entrada": [
@@ -136,6 +146,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "perfil_l_cantoneira",
       "nome": "Perfil L / Cantoneira",
+      "nome_curto": "Cantoneira L",
       "categoria": "perfil",
       "icon": "CornerDownRight",
       "variaveis_entrada": [
@@ -149,6 +160,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "perfil_t",
       "nome": "Perfil T",
+      "nome_curto": "Perfil T",
       "categoria": "perfil",
       "icon": "Split",
       "variaveis_entrada": [
@@ -163,6 +175,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "perfil_u",
       "nome": "Perfil U (Dobrado)",
+      "nome_curto": "Perfil U",
       "categoria": "perfil",
       "icon": "UnfoldVertical",
       "variaveis_entrada": [
@@ -177,6 +190,7 @@ export const GEOMETRIAS_SPEC = {
     {
       "id": "perfil_i_h",
       "nome": "Perfil I / Perfil H (Viga)",
+      "nome_curto": "Viga I / H",
       "categoria": "perfil",
       "icon": "Columns",
       "variaveis_entrada": [
@@ -291,6 +305,7 @@ const shapeCalculators = {
 export const SHAPES = GEOMETRIAS_SPEC.geometrias.map(geom => ({
   id: geom.id,
   name: geom.nome,
+  shortName: geom.nome_curto || geom.nome,
   categoria: geom.categoria,
   icon: geom.icon,
   descricaoFormula: geom.descricao_formula,

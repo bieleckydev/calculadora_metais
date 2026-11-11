@@ -111,13 +111,18 @@ function GeometryVectorIcon({ shapeId, isSelected }) {
 export default function ShapeSelector({ selectedShape, onSelectShape }) {
   const [selectedCategory, setSelectedCategory] = useState('todos');
 
-  const categories = [
-    { id: 'todos', label: 'Todas (14)' },
-    { id: 'barra', label: 'Barras (4)' },
-    { id: 'tubo', label: 'Tubos / Buchas (4)' },
-    { id: 'perfil', label: 'Perfis (4)' },
-    { id: 'chapa', label: 'Chapas / Bobinas (2)' }
+  // Rótulos das categorias; as contagens vêm dos dados
+  const categoryLabels = [
+    { id: 'todos', label: 'Todas' },
+    { id: 'barra', label: 'Barras' },
+    { id: 'tubo', label: 'Tubos / Buchas' },
+    { id: 'perfil', label: 'Perfis' },
+    { id: 'chapa', label: 'Chapas / Bobinas' }
   ];
+  const categories = categoryLabels.map(cat => {
+    const count = cat.id === 'todos' ? SHAPES.length : SHAPES.filter(s => s.categoria === cat.id).length;
+    return { ...cat, label: `${cat.label} (${count})` };
+  });
 
   const filteredShapes = SHAPES.filter(s => 
     selectedCategory === 'todos' || s.categoria === selectedCategory
@@ -151,22 +156,6 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
         {filteredShapes.map((shape) => {
           const isSelected = selectedShape.id === shape.id;
 
-          // Display labels
-          let label = shape.name.split('/')[0].trim();
-          if (shape.id === 'bobina') label = 'Bobina / Fita';
-          if (shape.id === 'barra_redonda_tarugo') label = 'Redonda';
-          if (shape.id === 'barra_quadrada') label = 'Quadrada';
-          if (shape.id === 'barra_retangular_chata') label = 'Barra Chata';
-          if (shape.id === 'barra_sextavada') label = 'Sextavada';
-          if (shape.id === 'tubo_redondo') label = 'Tubo Red.';
-          if (shape.id === 'bucha_tubo_mecanico') label = 'Bucha / Tubo';
-          if (shape.id === 'tubo_quadrado') label = 'Tubo Quad.';
-          if (shape.id === 'tubo_retangular') label = 'Tubo Ret.';
-          if (shape.id === 'perfil_l_cantoneira') label = 'Cantoneira L';
-          if (shape.id === 'perfil_t') label = 'Perfil T';
-          if (shape.id === 'perfil_u') label = 'Perfil U';
-          if (shape.id === 'perfil_i_h') label = 'Viga I / H';
-
           return (
             <button
               key={shape.id}
@@ -179,7 +168,7 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
               <span aria-hidden="true" className="shape-card__icon">
                 <GeometryVectorIcon shapeId={shape.id} isSelected={isSelected} />
               </span>
-              <span className="shape-card__label">{label}</span>
+              <span className="shape-card__label">{shape.shortName}</span>
             </button>
           );
         })}
