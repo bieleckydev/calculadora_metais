@@ -148,66 +148,14 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(184, 115, 51, 0.18);
 }
 
-/* Botões */
-.btn {
-  font-family: var(--font-main);
-  font-weight: 600;
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-md);
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  white-space: nowrap;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
-}
-
-.btn-primary {
-  background: var(--accent-copper);
-  color: var(--text-on-accent);
-  font-weight: 700;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: var(--accent-copper-light);
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--border-color-strong);
-  color: var(--text-primary);
-}
-
-.btn-outline:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.24);
-}
-
-.btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
-}
-
-.btn kbd {
-  font-family: var(--font-main);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.05rem 0.35rem;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.18);
-  opacity: 0.8;
-}
-
-/* Rodapé de ações (fixo na base da tela) */
+/* Rodapé fixo: marca e, em telas estreitas, o peso total */
 .erp-footer {
   position: sticky;
   bottom: 0;
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1rem;
   padding: 0.75rem 2rem;
   background: var(--bg-surface);
@@ -217,23 +165,6 @@ input:focus, select:focus {
 .erp-footer__brand {
   display: flex;
   align-items: center;
-}
-
-.erp-footer__actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.erp-footer__status {
-  text-align: right;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.erp-footer__status--success {
-  color: var(--accent-emerald);
-  font-weight: 600;
 }
 
 @keyframes fadeIn {

@@ -622,28 +622,17 @@
   }
 
   .erp-footer {
+    justify-content: space-between;
     padding: var(--space-3) var(--space-4);
-  }
-
-  .erp-footer__brand,
-  .erp-footer__status:empty {
-    display: none;
   }
 
   .erp-footer__total {
     display: flex;
-  }
-
-  .erp-footer__actions {
-    gap: var(--space-2);
-  }
-
-  .erp-footer__status {
-    display: none;
+    align-items: flex-end;
   }
 }
 
-/* Toque: alvos de pelo menos 44px e sem dica de tecla */
+/* Toque: alvos de pelo menos 44px */
 @media (pointer: coarse) {
   .chip,
   .small-btn {
@@ -653,10 +642,6 @@
   .icon-btn {
     min-width: 44px;
     min-height: 44px;
-  }
-
-  .btn kbd {
-    display: none;
   }
 }
 

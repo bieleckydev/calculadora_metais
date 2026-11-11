@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from './components/Header';
 import ShapeSelector from './components/ShapeSelector';
 import CalculatorForm from './components/CalculatorForm';
@@ -7,7 +7,7 @@ import TechnicalDiagram from './components/TechnicalDiagram';
 import FooterERP from './components/FooterERP';
 import { METALS, INOX_FAMILY, getMetalsByFamily } from './data/metals';
 import { SHAPES } from './data/shapes';
-import { calculateMetalWeight, formatWeight } from './utils/calculations';
+import { calculateMetalWeight } from './utils/calculations';
 
 
 export default function App() {
@@ -63,54 +63,6 @@ export default function App() {
     });
   }, [selectedShape, inputs, selectedMetal, quantity, lossMarginPct]);
 
-  // Aviso exibido no rodapé após enviar ou limpar
-  const [notice, setNotice] = useState(null);
-  const noticeTimer = useRef(null);
-
-  const showNotice = useCallback((text, tone = 'success') => {
-    clearTimeout(noticeTimer.current);
-    setNotice({ text, tone });
-    noticeTimer.current = setTimeout(() => setNotice(null), 4000);
-  }, []);
-
-  useEffect(() => () => clearTimeout(noticeTimer.current), []);
-
-  // ERP Injection Action
-  const handleInjectOrder = useCallback(() => {
-    if (!results.isValid) return;
-    // Ponto de integração com o ERP: aqui o item seria enviado ao Pedido/Cotação
-    showNotice(`Item enviado ao pedido: ${formatWeight(results.totalWeightKg)} kg`);
-  }, [results, showNotice]);
-
-  // Cancel Action
-  const handleCancel = useCallback(() => {
-    handleSelectShape(selectedShape);
-    showNotice('Campos limpos', 'neutral');
-  }, [selectedShape, showNotice]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Atalhos: Enter (em um campo do formulário), Alt+P (qualquer lugar), Esc (limpar)
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        handleCancel();
-        return;
-      }
-      const inFormField = e.target instanceof HTMLInputElement;
-      if (e.key === 'Enter' && !e.shiftKey && inFormField) {
-        e.preventDefault();
-        handleInjectOrder();
-        return;
-      }
-      if (e.altKey && e.key.toLowerCase() === 'p') {
-        e.preventDefault();
-        handleInjectOrder();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleInjectOrder, handleCancel]);
-
   return (
     <div className="app">
       <Header
@@ -164,11 +116,8 @@ export default function App() {
 
 
       <FooterERP
-        onCancel={handleCancel}
-        onInject={handleInjectOrder}
         isValid={results.isValid}
         totalWeightKg={results.totalWeightKg}
-        notice={notice}
       />
     </div>
   );

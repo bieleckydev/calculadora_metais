@@ -40,7 +40,6 @@
 A **Calculadora de Peso Teórico de Metais** da **SOFTCOMP** é um módulo frontend moderno em React + Vite criado para integrar diretamente aos fluxos de **Cotações, Vendas e Ordens de Produção (PCP)** de sistemas ERP industriais.
 
 ### 🌟 Destaques de UX/UI
-- **Operação por Atalhos de Teclado**: Navegação ultra-rápida via <kbd>Tab</kbd>, <kbd>Enter</kbd> (para injetar no ERP) e <kbd>Esc</kbd> (para cancelar).
 - **Digitação Limpa (Do Zero)**: Todos os campos de dimensão começam limpos sem placeholders para evitar erros operacionais.
 - **Conversão Automática de Frações**: Aceita decimais (ex: `12.7`) e converte automaticamente frações em polegadas (ex: `1/2"`, `3/8`, `1 1/2`) para milímetros ($mm$).
 - **Resultado Instantâneo**: Cálculo dinâmico em tempo real de Volume ($mm^3$), Volume ($cm^3$), Peso Unitário ($kg$), e Peso Total com Margem de Perda ($kg$), com 3 casas decimais para peças abaixo de 1 kg.
@@ -165,7 +164,7 @@ calculadora_metais/
 │   │   ├── CalculatorForm.jsx   # Formulário limpo de dimensões e quantidade com auto-conversão
 │   │   ├── TechnicalDiagram.jsx # Esquema Técnico 3D isométrico e cotas
 │   │   ├── ResultCard.jsx       # Painel de resultados em tempo real
-│   │   └── FooterERP.jsx        # Rodapé com ações (Limpar / Enviar ao pedido) e marca Softcomp
+│   │   └── FooterERP.jsx        # Rodapé com a marca Softcomp e o peso total em telas estreitas
 │   ├── data/
 │   │   ├── metals.js            # Tabela de materiais e densidades g/cm³
 │   │   └── shapes.js            # Especificação JSON de geometrias e calculadores

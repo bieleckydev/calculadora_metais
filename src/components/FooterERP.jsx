@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import softcompHorizontal from '../assets/SOFTCOMP-Logo-horizontal.png';
 import { formatWeight } from '../utils/calculations';
 
-export default function FooterERP({ onCancel, onInject, isValid, totalWeightKg, notice }) {
+export default function FooterERP({ isValid, totalWeightKg }) {
   const [transparentBieleckyUrl, setTransparentBieleckyUrl] = useState(null);
   const showBieleckyLogo = false; // Oculto por enquanto
 
@@ -101,23 +101,6 @@ export default function FooterERP({ onCancel, onInject, isValid, totalWeightKg, 
       <div className="erp-footer__total num" aria-hidden="true">
         <span>Total</span>
         <strong>{isValid ? `${formatWeight(totalWeightKg)} kg` : '—'}</strong>
-      </div>
-
-      <div className="erp-footer__actions">
-        <p
-          className={`erp-footer__status${notice ? ` erp-footer__status--${notice.tone}` : ''}`}
-          role="status"
-          aria-live="polite"
-        >
-          {notice ? notice.text : (isValid ? '' : 'Preencha as dimensões para enviar')}
-        </p>
-
-        <button type="button" className="btn btn-outline" onClick={onCancel} aria-keyshortcuts="Escape">
-          Limpar <kbd aria-hidden="true">Esc</kbd>
-        </button>
-        <button type="button" className="btn btn-primary" onClick={onInject} disabled={!isValid} aria-keyshortcuts="Enter Alt+P">
-          Enviar ao pedido <kbd aria-hidden="true">Enter</kbd>
-        </button>
       </div>
 
       {/* Canto Direito Inferior (Total Oposto): bielecky.dev Logo (Oculto por enquanto) */}
