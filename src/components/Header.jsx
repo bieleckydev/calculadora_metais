@@ -1,6 +1,7 @@
 import React from 'react';
 import { METALS, MATERIAL_FAMILIES, getMetalsByFamily } from '../data/metals';
 import { ChevronDown } from 'lucide-react';
+import { formatNumber } from '../utils/calculations';
 import softcompIcon from '../assets/softcomp_logo.png';
 
 export default function Header({
@@ -57,7 +58,7 @@ export default function Header({
               >
                 {familyMetals.map(m => (
                   <option key={m.id} value={m.id}>
-                    {m.name} (ρ = {m.density} g/cm³)
+                    {m.name} · {formatNumber(m.density, 2)} g/cm³
                   </option>
                 ))}
               </select>
