@@ -1,5 +1,5 @@
 import React from 'react';
-import { METALS } from '../data/metals';
+import { METALS, MATERIAL_FAMILIES, getMetalsByFamily } from '../data/metals';
 import { ChevronDown } from 'lucide-react';
 import softcompIcon from '../assets/softcomp_logo.png';
 
@@ -9,11 +9,7 @@ export default function Header({
   selectedMetal,
   onSelectMetal
 }) {
-  // Extract families
-  const families = ['Aço Inox', 'Metais Ferrosos e Aços', 'Ligas de Alumínio', 'Ligas de Cobre', 'Outros Metais Industriais', 'Plásticos e Polímeros Técnicos'];
-
-  // Filter metals in the active family
-  const familyMetals = METALS.filter(m => m.category === selectedFamily || (selectedFamily === 'Aço Inox' && m.category === 'Metais Ferrosos e Aços' && m.id.includes('inox')));
+  const familyMetals = getMetalsByFamily(selectedFamily);
 
   return (
     <header className="app-header">
@@ -40,7 +36,7 @@ export default function Header({
                 value={selectedFamily}
                 onChange={(e) => onSelectFamily(e.target.value)}
               >
-                {families.map(f => (
+                {MATERIAL_FAMILIES.map(f => (
                   <option key={f} value={f}>{f}</option>
                 ))}
               </select>

@@ -103,3 +103,19 @@ export const METALS = METALS_METADATA.map(item => ({
   ...item,
   density: DENSIDADES[item.id] || 7.85
 }));
+
+// Família de atalho: os aços inox também pertencem a "Metais Ferrosos e Aços"
+export const INOX_FAMILY = 'Aço Inox';
+
+// Famílias do seletor, na ordem em que aparecem nos dados
+export const MATERIAL_FAMILIES = [
+  INOX_FAMILY,
+  ...new Set(METALS.map(m => m.category))
+];
+
+export function getMetalsByFamily(family) {
+  if (family === INOX_FAMILY) {
+    return METALS.filter(m => m.id.includes('inox'));
+  }
+  return METALS.filter(m => m.category === family);
+}
