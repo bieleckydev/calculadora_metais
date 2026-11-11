@@ -31,6 +31,14 @@
   --text-muted: #808999;         /* 5:1 sobre a superfície (antes 2,6:1) */
   --text-on-accent: #111214;
 
+  /* Espaçamento (escala de 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 1.75rem;
+
   --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.45);
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -65,13 +73,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-/* Painel: superfície plana, um passo de tom acima do fundo */
-.glass-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
 }
 
 /* Tipografia: uma família só */
@@ -229,4 +230,10 @@ input:focus, select:focus {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.erp-footer__brand img {
+  height: 22px;
+  width: auto;
+  opacity: 0.85;
 }

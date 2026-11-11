@@ -124,39 +124,21 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
   );
 
   return (
-    <div className="glass-card" style={{ padding: '1.5rem', marginBottom: '1.5rem' }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '1rem',
-        marginBottom: '1.25rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <LayoutGrid size={18} color="var(--accent-blue)" />
-          <h3 style={{ fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-            Geometria do perfil
-          </h3>
-        </div>
+    <section className="panel">
+      <div className="panel__head">
+        <h3 className="panel__title">
+          <LayoutGrid size={18} />
+          Geometria do perfil
+        </h3>
 
-        {/* Quick Category Filter Tabs */}
-        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+        {/* Filtro rápido por categoria */}
+        <div className="chip-group">
           {categories.map(cat => (
             <button
               key={cat.id}
+              type="button"
+              className={`chip${selectedCategory === cat.id ? ' is-active' : ''}`}
               onClick={() => setSelectedCategory(cat.id)}
-              style={{
-                background: selectedCategory === cat.id ? 'var(--accent-copper)' : 'rgba(255, 255, 255, 0.04)',
-                color: selectedCategory === cat.id ? 'var(--text-on-accent)' : 'var(--text-secondary)',
-                border: 'none',
-                padding: '0.3rem 0.65rem',
-                borderRadius: '6px',
-                fontSize: '0.78rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                transition: 'background-color 0.15s ease, color 0.15s ease'
-              }}
             >
               {cat.label}
             </button>
@@ -164,12 +146,7 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
         </div>
       </div>
 
-      {/* Grid of ALL 14 Shape Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(135px, 1fr))',
-        gap: '0.85rem'
-      }}>
+      <div className="shape-grid">
         {filteredShapes.map((shape) => {
           const isSelected = selectedShape.id === shape.id;
 
@@ -192,38 +169,16 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
           return (
             <button
               key={shape.id}
+              type="button"
+              className={`shape-card${isSelected ? ' is-selected' : ''}`}
               onClick={() => onSelectShape(shape)}
-              style={{
-                background: isSelected ? 'rgba(184, 115, 51, 0.10)' : 'rgba(255, 255, 255, 0.02)',
-                border: `1px solid ${isSelected ? 'var(--accent-copper)' : 'var(--border-color)'}`,
-                borderRadius: '12px',
-                padding: '1rem 0.65rem',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s ease, border-color 0.2s ease',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.65rem',
-                position: 'relative',
-                boxShadow: isSelected ? 'inset 0 0 0 1px var(--accent-copper)' : 'none'
-              }}
             >
               <GeometryVectorIcon shapeId={shape.id} isSelected={isSelected} />
-
-              <span style={{
-                fontSize: '0.82rem',
-                fontWeight: isSelected ? 700 : 500,
-                color: isSelected ? '#fff' : 'var(--text-secondary)',
-                textAlign: 'center',
-                lineHeight: 1.2
-              }}>
-                {label}
-              </span>
+              <span className="shape-card__label">{label}</span>
             </button>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

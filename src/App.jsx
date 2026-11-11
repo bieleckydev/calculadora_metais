@@ -104,7 +104,7 @@ export default function App() {
   }, [handleInjectOrder, handleCancel]);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-dark)' }}>
+    <div className="app">
       <Header
         selectedFamily={selectedFamily}
         onSelectFamily={setSelectedFamily}
@@ -112,29 +112,15 @@ export default function App() {
         onSelectMetal={setSelectedMetal}
       />
 
-      <main style={{
-        flex: 1,
-        maxWidth: '1360px',
-        width: '100%',
-        margin: '0 auto',
-        padding: '1.75rem 1.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.75rem'
-      }}>
+      <main className="app-main">
         {/* Row 1: Geometry selector | Technical diagram */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) 380px',
-          gap: '1.75rem',
-          alignItems: 'start'
-        }}>
+        <div className="app-row">
           <ShapeSelector
             selectedShape={selectedShape}
             onSelectShape={handleSelectShape}
           />
 
-          <div style={{ position: 'sticky', top: '72px' }}>
+          <div className="app-aside">
             <TechnicalDiagram
               shapeId={selectedShape.id}
               activeField={activeField}
@@ -143,12 +129,7 @@ export default function App() {
         </div>
 
         {/* Row 2: Dimension inputs | Weight results */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) 380px',
-          gap: '1.75rem',
-          alignItems: 'start'
-        }}>
+        <div className="app-row">
           <CalculatorForm
             shape={selectedShape}
             inputs={inputs}
@@ -162,7 +143,7 @@ export default function App() {
             errors={results.errors}
           />
 
-          <div style={{ position: 'sticky', top: '72px' }}>
+          <div className="app-aside">
             <ResultCard
               results={results}
               selectedMetal={selectedMetal}

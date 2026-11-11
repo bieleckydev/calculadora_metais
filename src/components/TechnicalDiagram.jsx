@@ -585,74 +585,33 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
   };
 
   return (
-    <div className="glass-card" style={{ padding: '1.25rem', marginBottom: '1.25rem' }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '0.5rem',
-        marginBottom: '0.75rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <Box size={16} color="var(--accent-blue)" />
-          <h4 style={{ fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-            Esquema técnico
-          </h4>
-        </div>
+    <section className="panel">
+      <div className="panel__head">
+        <h4 className="panel__title">
+          <Box size={16} />
+          Esquema técnico
+        </h4>
 
         <button
           type="button"
+          className="small-btn"
           onClick={() => setUserRotationAngle(prev => (prev + 30) % 360)}
           title="Rotacionar Modelo 3D"
-          style={{
-            background: 'rgba(255, 255, 255, 0.04)',
-            border: '1px solid var(--border-color)',
-            color: 'var(--text-secondary)',
-            borderRadius: '6px',
-            padding: '0.2rem 0.5rem',
-            fontSize: '0.72rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.3rem'
-          }}
         >
           <RotateCw size={12} />
           <span>Girar 3D</span>
         </button>
       </div>
 
-      <div style={{
-        background: activeInfo ? 'rgba(184, 115, 51, 0.10)' : 'rgba(255, 255, 255, 0.02)',
-        border: `1px solid ${activeInfo ? 'var(--accent-copper)' : 'var(--border-color)'}`,
-        borderRadius: '8px',
-        padding: '0.5rem 0.75rem',
-        marginBottom: '0.85rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.6rem',
-        transition: 'all 0.2s ease'
-      }}>
-        <Target size={16} color={activeInfo ? 'var(--accent-copper)' : 'var(--text-muted)'} style={{ flexShrink: 0 }} />
-        <span style={{ fontSize: '0.82rem', color: activeInfo ? 'var(--text-primary)' : 'var(--text-muted)', fontWeight: activeInfo ? 700 : 400 }}>
+      <div className={`diagram-info${activeInfo ? ' is-active' : ''}`}>
+        <Target size={16} />
+        <span>
           {activeInfo ? activeInfo.desc : 'Selecione ou edite um campo para ver a descrição e perspectiva 3D da cota'}
         </span>
       </div>
 
-      <div style={{
-        width: '100%',
-        height: '220px',
-        background: 'var(--bg-dark)',
-        borderRadius: '12px',
-        border: '1px solid var(--border-color)',
-        position: 'relative',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <svg width="280" height="220" viewBox="0 0 280 220" style={{ width: '100%', height: '100%' }}>
+      <div className="diagram-canvas">
+        <svg width="280" height="220" viewBox="0 0 280 220">
           <defs>
             <pattern id="blueprint-grid" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="1" />
@@ -664,6 +623,6 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
           {render3DModelSvg()}
         </svg>
       </div>
-    </div>
+    </section>
   );
 }

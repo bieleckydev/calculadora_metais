@@ -93,11 +93,7 @@ export default function FooterERP({ onCancel, onInject, isValid, notice }) {
     <footer className="erp-footer">
       {/* SOFTCOMP Logo */}
       <div className="erp-footer__brand">
-        <img
-          src={softcompHorizontal}
-          alt="SOFTCOMP"
-          style={{ height: '22px', width: 'auto', opacity: 0.85 }}
-        />
+        <img src={softcompHorizontal} alt="SOFTCOMP" />
       </div>
 
       <div className="erp-footer__actions">

@@ -50,64 +50,36 @@ export default function ResultCard({
     copyTimer.current = setTimeout(() => setCopied(false), 2000);
   };
 
+  const copyClass = ['icon-btn', copied === 'ok' && 'is-ok', copied === 'error' && 'is-error'].filter(Boolean).join(' ');
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      {/* Primary Weight Display Card */}
-      <div className="glass-card" style={{ padding: '1.5rem', background: 'var(--bg-surface)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-            Peso unitário
-          </span>
+    <div className="result">
+      {/* Peso */}
+      <section className="panel">
+        <span className="result__label">Peso unitário</span>
+        <div className="result__unit-weight num">
+          {isValid ? formatNumber(weightKg, 2) : '--.--'} <span className="result__suffix">kg/pç</span>
         </div>
 
-        {/* Unit Weight */}
-        <div className="num" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1 }}>
-          {isValid ? formatNumber(weightKg, 2) : '--.--'} <span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 500 }}>kg/pç</span>
-        </div>
+        <div className="result__divider" />
 
-        <div style={{ borderTop: '1px solid var(--border-color)', margin: '1.25rem 0 1rem 0' }} />
-
-        {/* Total Weight */}
-        <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-          Peso total bruto
-        </span>
-        <div className="num" style={{ fontSize: '3rem', fontWeight: 700, color: 'var(--accent-copper)', letterSpacing: '-0.02em', lineHeight: 1.1, marginTop: '0.2rem' }}>
-          {isValid ? formatNumber(totalWeightKg, 2) : '--.--'} <span style={{ fontSize: '1.3rem', color: 'var(--text-muted)', fontWeight: 600 }}>kg</span>
+        <span className="result__label">Peso total bruto</span>
+        <div className="result__total num">
+          {isValid ? formatNumber(totalWeightKg, 2) : '--.--'} <span className="result__suffix">kg</span>
         </div>
-      </div>
+      </section>
 
-      {/* Commercial Summary Box */}
-      <div style={{
-        background: 'var(--bg-dark)',
-        border: '1px solid var(--border-color)',
-        borderRadius: '12px',
-        padding: '1rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '0.85rem'
-      }}>
-        <div style={{ fontSize: '0.82rem', color: 'var(--text-primary)', lineHeight: 1.45 }}>
-          {commercialDesc}
-        </div>
+      {/* Descrição comercial */}
+      <div className="desc-box">
+        <div className="desc-box__text">{commercialDesc}</div>
 
         <button
           type="button"
+          className={copyClass}
           onClick={handleCopyDesc}
           disabled={!isValid}
           title={copied === 'error' ? 'Não foi possível copiar' : 'Copiar descrição comercial'}
           aria-label={copied === 'ok' ? 'Descrição copiada' : 'Copiar descrição comercial'}
-          style={{
-            background: copied === 'ok' ? 'rgba(61, 139, 110, 0.2)' : 'rgba(255, 255, 255, 0.04)',
-            border: `1px solid ${copied === 'ok' ? 'var(--accent-emerald)' : copied === 'error' ? 'var(--accent-red)' : 'var(--border-color)'}`,
-            borderRadius: '8px',
-            padding: '0.5rem',
-            cursor: isValid ? 'pointer' : 'not-allowed',
-            opacity: isValid ? 1 : 0.4,
-            color: copied === 'ok' ? 'var(--accent-emerald)' : 'var(--text-primary)',
-            transition: 'background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease',
-            flexShrink: 0
-          }}
         >
           {copied === 'ok' ? <Check size={18} /> : <Copy size={18} />}
         </button>
