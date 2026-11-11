@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { formatNumber, generateCommercialDescription } from '../utils/calculations';
 import { Copy, Check } from 'lucide-react';
 
@@ -21,11 +21,34 @@ export default function ResultCard({
     results
   });
 
-  const handleCopyDesc = () => {
-    if (!commercialDesc) return;
-    navigator.clipboard.writeText(commercialDesc);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const copyTimer = useRef(null);
+  useEffect(() => () => clearTimeout(copyTimer.current), []);
+
+  // Clipboard pode falhar (iframe sem permissão, HTTP); usa fallback com textarea
+  const writeClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(area);
+      return ok;
+    }
+  };
+
+  const handleCopyDesc = async () => {
+    if (!isValid) return;
+    const ok = await writeClipboard(commercialDesc);
+    clearTimeout(copyTimer.current);
+    setCopied(ok ? 'ok' : 'error');
+    copyTimer.current = setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -72,19 +95,22 @@ export default function ResultCard({
         <button
           type="button"
           onClick={handleCopyDesc}
-          title="Copiar Nomenclatura Comercial"
+          disabled={!isValid}
+          title={copied === 'error' ? 'Não foi possível copiar' : 'Copiar descrição comercial'}
+          aria-label={copied === 'ok' ? 'Descrição copiada' : 'Copiar descrição comercial'}
           style={{
-            background: copied ? 'rgba(61, 139, 110, 0.2)' : 'rgba(255, 255, 255, 0.04)',
-            border: `1px solid ${copied ? 'var(--accent-emerald)' : 'var(--border-color)'}`,
+            background: copied === 'ok' ? 'rgba(61, 139, 110, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+            border: `1px solid ${copied === 'ok' ? 'var(--accent-emerald)' : copied === 'error' ? 'var(--accent-red)' : 'var(--border-color)'}`,
             borderRadius: '8px',
             padding: '0.5rem',
-            cursor: 'pointer',
-            color: copied ? 'var(--accent-emerald)' : 'var(--text-primary)',
-            transition: 'all 0.15s ease',
+            cursor: isValid ? 'pointer' : 'not-allowed',
+            opacity: isValid ? 1 : 0.4,
+            color: copied === 'ok' ? 'var(--accent-emerald)' : 'var(--text-primary)',
+            transition: 'background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease',
             flexShrink: 0
           }}
         >
-          {copied ? <Check size={18} /> : <Copy size={18} />}
+          {copied === 'ok' ? <Check size={18} /> : <Copy size={18} />}
         </button>
       </div>
     </div>
