@@ -98,11 +98,16 @@ export const METALS_METADATA = [
   { id: 'vidro_comum', name: 'Vidro Comum (Silicato)', category: 'Outros Materiais de Engenharia', description: 'Material cerâmico inorgânico transparente.' }
 ];
 
-// Re-export METALS array with density merged from DENSIDADES constant
-export const METALS = METALS_METADATA.map(item => ({
-  ...item,
-  density: DENSIDADES[item.id] || 7.85
-}));
+// Junta cada material com sua densidade. Sem densidade cadastrada é erro de
+// dados (ex: id digitado diferente nas duas tabelas): falha na hora em vez
+// de calcular com uma densidade inventada
+export const METALS = METALS_METADATA.map(item => {
+  const density = DENSIDADES[item.id];
+  if (!(density > 0)) {
+    throw new Error(`Material "${item.id}" sem densidade em DENSIDADES (metals.js)`);
+  }
+  return { ...item, density };
+});
 
 // Família de atalho: os aços inox também pertencem a "Metais Ferrosos e Aços"
 export const INOX_FAMILY = 'Aço Inox';
