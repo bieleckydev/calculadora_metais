@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 
 import { Sliders, AlertTriangle } from 'lucide-react';
 import { parseDimensionValue } from '../utils/calculations';
@@ -17,30 +17,37 @@ function UnitField({
   error,
   hint,
   className = '',
+  id,
   ...inputProps
 }) {
+  const autoId = useId();
+  const inputId = id || autoId;
+  const errorId = `${inputId}-erro`;
   const groupClass = ['input-group', isActive && 'is-active', error && 'has-error'].filter(Boolean).join(' ');
 
   return (
     <div className={className}>
       <div className="field__head">
-        <label className="field__label">{label}</label>
+        <label className="field__label" htmlFor={inputId}>{label}</label>
         {hint && <span className="field__hint">{hint}</span>}
       </div>
 
       <div className={groupClass}>
         <input
+          id={inputId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? errorId : undefined}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={onFocus}
           onBlur={onBlur}
           {...inputProps}
         />
-        <div className="input-group__unit">{unit}</div>
+        <div className="input-group__unit" aria-hidden="true">{unit}</div>
       </div>
 
       {error && (
-        <div className="field__error">
+        <div className="field__error" id={errorId} role="alert">
           <AlertTriangle size={14} />
           <span>{error}</span>
         </div>
@@ -112,10 +119,10 @@ export default function CalculatorForm({
   return (
     <section className="panel">
       <div className="panel__head">
-        <h3 className="panel__title">
+        <h2 className="panel__title">
           <Sliders size={18} />
           Dimensões <span className="panel__title-sub">· {shape.name}</span>
-        </h3>
+        </h2>
       </div>
 
       <div className="field-grid">
@@ -139,11 +146,14 @@ export default function CalculatorForm({
         {/* ── Aba Desigual: visível somente para Perfil L / Cantoneira */}
         {shape.id === 'perfil_l_cantoneira' && (
           <>
-            <div
-              className={`toggle-row${abaDesigual ? ' is-on' : ''}`}
-              onClick={() => handleAbaDesigualToggle(!abaDesigual)}
-            >
-              <div className="toggle-row__box">
+            <label className={`toggle-row${abaDesigual ? ' is-on' : ''}`}>
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={abaDesigual}
+                onChange={(e) => handleAbaDesigualToggle(e.target.checked)}
+              />
+              <div className="toggle-row__box" aria-hidden="true">
                 {abaDesigual && (
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                     <path d="M1.5 5L4 7.5L8.5 2.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -154,7 +164,7 @@ export default function CalculatorForm({
               <span className="toggle-row__note">
                 {abaDesigual ? '— informe as duas abas separadamente' : '— L simétrico (A = B)'}
               </span>
-            </div>
+            </label>
 
             {abaDesigual && (
               <UnitField

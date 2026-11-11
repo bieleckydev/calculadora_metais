@@ -126,18 +126,19 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
   return (
     <section className="panel">
       <div className="panel__head">
-        <h3 className="panel__title">
+        <h2 className="panel__title" id="geometria-titulo">
           <LayoutGrid size={18} />
           Geometria do perfil
-        </h3>
+        </h2>
 
         {/* Filtro rápido por categoria */}
-        <div className="chip-group">
+        <div className="chip-group" role="group" aria-label="Filtrar geometrias por categoria">
           {categories.map(cat => (
             <button
               key={cat.id}
               type="button"
               className={`chip${selectedCategory === cat.id ? ' is-active' : ''}`}
+              aria-pressed={selectedCategory === cat.id}
               onClick={() => setSelectedCategory(cat.id)}
             >
               {cat.label}
@@ -146,7 +147,7 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
         </div>
       </div>
 
-      <div className="shape-grid">
+      <div className="shape-grid" role="group" aria-labelledby="geometria-titulo">
         {filteredShapes.map((shape) => {
           const isSelected = selectedShape.id === shape.id;
 
@@ -171,9 +172,13 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
               key={shape.id}
               type="button"
               className={`shape-card${isSelected ? ' is-selected' : ''}`}
+              aria-pressed={isSelected}
+              title={shape.name}
               onClick={() => onSelectShape(shape)}
             >
-              <GeometryVectorIcon shapeId={shape.id} isSelected={isSelected} />
+              <span aria-hidden="true" className="shape-card__icon">
+                <GeometryVectorIcon shapeId={shape.id} isSelected={isSelected} />
+              </span>
               <span className="shape-card__label">{label}</span>
             </button>
           );

@@ -248,3 +248,31 @@ input:focus, select:focus {
   width: auto;
   opacity: 0.85;
 }
+
+/* ── Acessibilidade ────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Anel de foco só para navegação por teclado */
+button:focus-visible,
+a:focus-visible,
+label:has(> input.sr-only:focus-visible) {
+  outline: 2px solid var(--accent-copper-light);
+  outline-offset: 2px;
+}
+
+/* Menos movimento: mantém a mudança de estado, remove deslocamentos */
+@media (prefers-reduced-motion: reduce) {
+  .field--appear {
+    animation: none;
+  }
+}

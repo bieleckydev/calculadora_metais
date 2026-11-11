@@ -33,9 +33,10 @@ export default function Header({
         {/* Seleção de material */}
         <div className="app-header__controls">
           <div className="header-field">
-            <span className="header-field__label">Material:</span>
+            <label className="header-field__label" htmlFor="filtro-familia">Material:</label>
             <div className="select-wrap">
               <select
+                id="filtro-familia"
                 value={selectedFamily}
                 onChange={(e) => onSelectFamily(e.target.value)}
               >
@@ -48,9 +49,10 @@ export default function Header({
           </div>
 
           <div className="header-field">
-            <span className="header-field__label">Liga/Densidade:</span>
+            <label className="header-field__label" htmlFor="filtro-liga">Liga/Densidade:</label>
             <div className="select-wrap">
               <select
+                id="filtro-liga"
                 value={selectedMetal.id}
                 onChange={(e) => {
                   const m = METALS.find(item => item.id === e.target.value);

@@ -587,23 +587,24 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
   return (
     <section className="panel">
       <div className="panel__head">
-        <h4 className="panel__title">
+        <h2 className="panel__title">
           <Box size={16} />
           Esquema técnico
-        </h4>
+        </h2>
 
         <button
           type="button"
           className="small-btn"
           onClick={() => setUserRotationAngle(prev => (prev + 30) % 360)}
-          title="Rotacionar Modelo 3D"
+          title="Rotacionar modelo 3D"
+          aria-label="Girar o modelo 3D em 30 graus"
         >
           <RotateCw size={12} />
           <span>Girar 3D</span>
         </button>
       </div>
 
-      <div className={`diagram-info${activeInfo ? ' is-active' : ''}`}>
+      <div className={`diagram-info${activeInfo ? ' is-active' : ''}`} aria-live="polite">
         <Target size={16} />
         <span>
           {activeInfo ? activeInfo.desc : 'Selecione ou edite um campo para ver a descrição e perspectiva 3D da cota'}
@@ -611,7 +612,7 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
       </div>
 
       <div className="diagram-canvas">
-        <svg width="280" height="220" viewBox="0 0 280 220">
+        <svg width="280" height="220" viewBox="0 0 280 220" role="img" aria-label={activeInfo ? `Esquema 3D com a cota ${activeInfo.label} em destaque` : 'Esquema 3D da geometria selecionada'}>
           <defs>
             <pattern id="blueprint-grid" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="1" />

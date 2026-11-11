@@ -105,11 +105,11 @@ export default function FooterERP({ onCancel, onInject, isValid, notice }) {
           {notice ? notice.text : (isValid ? '' : 'Preencha as dimensões para enviar')}
         </p>
 
-        <button type="button" className="btn btn-outline" onClick={onCancel}>
-          Limpar <kbd>Esc</kbd>
+        <button type="button" className="btn btn-outline" onClick={onCancel} aria-keyshortcuts="Escape">
+          Limpar <kbd aria-hidden="true">Esc</kbd>
         </button>
-        <button type="button" className="btn btn-primary" onClick={onInject} disabled={!isValid}>
-          Enviar ao pedido <kbd>Enter</kbd>
+        <button type="button" className="btn btn-primary" onClick={onInject} disabled={!isValid} aria-keyshortcuts="Enter Alt+P">
+          Enviar ao pedido <kbd aria-hidden="true">Enter</kbd>
         </button>
       </div>
 

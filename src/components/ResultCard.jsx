@@ -55,7 +55,7 @@ export default function ResultCard({
   return (
     <div className="result">
       {/* Peso */}
-      <section className="panel">
+      <section className="panel" aria-label="Resultado do cálculo">
         <span className="result__label">Peso unitário</span>
         <div className="result__unit-weight num">
           {isValid ? formatNumber(weightKg, 2) : '--.--'} <span className="result__suffix">kg/pç</span>
@@ -63,15 +63,15 @@ export default function ResultCard({
 
         <div className="result__divider" />
 
-        <span className="result__label">Peso total bruto</span>
-        <div className="result__total num">
+        <span className="result__label" id="peso-total-label">Peso total bruto</span>
+        <div className="result__total num" aria-live="polite" aria-atomic="true" aria-labelledby="peso-total-label">
           {isValid ? formatNumber(totalWeightKg, 2) : '--.--'} <span className="result__suffix">kg</span>
         </div>
       </section>
 
       {/* Descrição comercial */}
       <div className="desc-box">
-        <div className="desc-box__text">{commercialDesc}</div>
+        <p className="desc-box__text">{commercialDesc}</p>
 
         <button
           type="button"
