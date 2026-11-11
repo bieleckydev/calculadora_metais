@@ -41,7 +41,7 @@ A **Calculadora de Peso Teórico de Metais** da **SOFTCOMP** é um módulo front
 
 ### 🌟 Destaques de UX/UI
 - **Digitação Limpa (Do Zero)**: Todos os campos de dimensão começam limpos sem placeholders para evitar erros operacionais.
-- **Conversão Automática de Frações**: Aceita decimais (ex: `12.7`) e converte automaticamente frações em polegadas (ex: `1/2"`, `3/8`, `1 1/2`) para milímetros ($mm$).
+- **Conversão Automática de Polegadas**: Aceita decimais com vírgula ou ponto (ex: `12,7`, `12.7`, `6000mm`) e converte polegadas (ex: `1/2"`, `3/8`, `1 1/2`, `1-1/2`, `2in`, `2 pol`) para milímetros ($mm$). Texto que não é medida (ex: `abc`, `-5`) mostra erro no campo; `1.000` é lido como 1 mm (o ponto sozinho é decimal) e o campo avisa isso.
 - **Resultado Instantâneo**: Cálculo dinâmico em tempo real de Volume ($mm^3$), Volume ($cm^3$), Peso Unitário ($kg$), e Peso Total com Margem de Perda ($kg$), com 3 casas decimais para peças abaixo de 1 kg.
 
 ---
@@ -73,8 +73,8 @@ Caso você deseje utilizar e incorporar esta calculadora inteira em **seu própr
 | :--- | :--- |
 | 🎲 **Visualizador 3D Isométrico** | Modelo 3D vetorial SVG que reorienta a câmera ($X, Y, Z$) e ilumina a cota ativa (Comprimento, Diâmetro, Largura, Espessura). |
 | 🛡️ **Guardrails Físicos Automáticos** | Validação em tempo real impedindo geometrias impossíveis ($D_{int} \ge D_{ext}$, $e \ge A$, $2tf \ge H$). |
-| 📐 **Conversão Automática de Frações** | Identifica frações de polegada (ex: `1/2"`, `3/8`, `1 1/2`) e converte instantaneamente para milímetros ($mm$). |
-| 📦 **Margem de Perda** | Configuração rápida de percentual de retalho/perda ($0\% \text{ a } 30\%$). |
+| 📐 **Conversão Automática de Polegadas** | Identifica polegadas (ex: `1/2"`, `3/8`, `1 1/2`, `1-1/2`, `2in`) e converte para milímetros ($mm$) ao sair do campo. |
+| 📦 **Margem de Perda** | Configuração rápida de percentual de retalho/perda ($\ge 0\%$; vazio = $0\%$). |
 | 📝 **Gerador de Nomenclatura Comercial** | Padronização automática de descrição para itens de cotação/pedido ERP. |
 
 ---
@@ -101,7 +101,7 @@ O sistema suporta **14 perfis geométricos industriais** organizados em 4 catego
 │   └── Tubo Retangular (V = 2 × e × (A + B - 2e) × C)
 │
 └── 🏗️ Perfis Estruturais
-    ├── Perfil L / Cantoneira (V = e × (2A - e) × C)
+    ├── Perfil L / Cantoneira (V = e × (A + B - e) × C; B = A se simétrica)
     ├── Perfil T (V = e × (A + B - e) × C)
     ├── Perfil U Dobrado (V = e × (H + 2B - 2e) × C)
     └── Perfil I / H - Viga (V = [2 × B × tf + (H - 2tf) × tw] × C)
@@ -126,7 +126,6 @@ Tabela de densidades ($\rho$) industriais cadastradas e editáveis:
 O componente `TechnicalDiagram.jsx` oferece:
 - **Câmera 3D Reclinável**: Ao focar no campo *Comprimento ($C$)*, o modelo ajusta o ângulo para demonstrar a extrusão longitudinal no eixo Z.
 - **Rotação Manual**: Botão <kbd>Girar 3D</kbd> para girar o modelo em passos de $30^\circ$.
-- **Modo 2D/3D**: Alternância rápida entre a perspectiva tridimensional e o desenho técnico de corte transversal.
 
 ---
 
@@ -170,6 +169,7 @@ calculadora_metais/
 │   │   └── shapes.js            # Especificação JSON de geometrias e calculadores
 │   └── utils/
 │       └── calculations.js      # Calculador de peso, auto-conversor de frações e guardrails
+├── tests/                       # Testes das fórmulas, do conversor e das validações (npm test)
 ```
 
 ---
@@ -198,6 +198,11 @@ calculadora_metais/
    ```
    Acesse no navegador: `http://localhost:5173/`
 
+   Testes automatizados (runner nativo do Node, sem dependências):
+   ```bash
+   npm test
+   ```
+
 4. **Gerar bundle de produção Web e Versão Standalone**:
    ```bash
    npm run build
@@ -208,7 +213,7 @@ calculadora_metais/
 
 ## 🧮 Especificação Matemática
 
-O peso teórico unitário ($P_{\text{unit}}$) em quilos ($kg$) é calculated por:
+O peso teórico unitário ($P_{\text{unit}}$) em quilos ($kg$) é calculado por:
 
 $$P_{\text{unit}} = \frac{V_{\text{mm}^3} \times \rho_{\text{g/cm}^3}}{1.000.000}$$
 
