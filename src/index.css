@@ -31,6 +31,17 @@
   --text-muted: #808999;         /* 5:1 sobre a superfície (antes 2,6:1) */
   --text-on-accent: #111214;
 
+  /* Esquema técnico 3D: aço no traço, cobre na cota em foco */
+  --diagram-stroke: var(--accent-steel);
+  --diagram-edge: #4A5160;
+  --diagram-edge-muted: #3C3F48;
+  --diagram-dim: #7C8797;
+  --diagram-label: var(--accent-silver);
+  --diagram-label-strong: var(--text-primary);
+  --diagram-focus: var(--accent-copper-light);
+  --diagram-thickness: var(--accent-red);
+  --diagram-hole: var(--bg-dark);
+
   /* Espaçamento (escala de 4px) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
