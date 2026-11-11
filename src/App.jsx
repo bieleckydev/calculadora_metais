@@ -98,7 +98,8 @@ export default function App() {
 
           <div className="app-aside">
             <TechnicalDiagram
-              shapeId={selectedShape.id}
+              shape={selectedShape}
+              inputs={inputs}
               activeField={activeField}
             />
           </div>

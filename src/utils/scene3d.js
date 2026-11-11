@@ -357,8 +357,11 @@ export function buildModel(shape, inputs = {}) {
     };
   });
 
-  // Cota do comprimento (extrusão), por padrão no canto inferior direito
-  const lengthDim = section.lengthDim || { fields: ['comprimento'], symbol: 'C', at: [bb.maxX, bb.minY], shift: [1, 0] };
+  // Cota do comprimento (extrusão): no ponto mais "inferior direito" da
+  // própria seção (num círculo, a 45°), afastada na diagonal. O canto da
+  // caixa ficaria longe da peça em seções redondas
+  const corner = section.parts[0].outer.reduce((best, p) => (p[0] - p[1] > best[0] - best[1] ? p : best));
+  const lengthDim = section.lengthDim || { fields: ['comprimento'], symbol: 'C', at: corner, shift: [0.7, -0.7] };
   const lx = lengthDim.at[0] + lengthDim.shift[0] * gap;
   const ly = lengthDim.at[1] + lengthDim.shift[1] * gap;
   dims.push({ fields: lengthDim.fields, label: labelFor(lengthDim), a: [lx, ly, zHalf], b: [lx, ly, -zHalf] });
@@ -425,7 +428,11 @@ export function projectScene(model, view, viewport) {
   const dims = model.dims.map(dim => {
     const [x1, y1] = toScreen(rotate(dim.a));
     const [x2, y2] = toScreen(rotate(dim.b));
-    return { fields: dim.fields, label: dim.label, x1: fmt(x1), y1: fmt(y1), x2: fmt(x2), y2: fmt(y2) };
+    // Quanto da cota sobra na tela (1 = de frente, 0 = vista de ponta):
+    // distingue cota curta de verdade (espessura) de cota vista de topo
+    const trueLength = Math.hypot(dim.b[0] - dim.a[0], dim.b[1] - dim.a[1], dim.b[2] - dim.a[2]) * k;
+    const visibleRatio = trueLength > 0 ? Math.hypot(x2 - x1, y2 - y1) / trueLength : 0;
+    return { fields: dim.fields, label: dim.label, x1: fmt(x1), y1: fmt(y1), x2: fmt(x2), y2: fmt(y2), visibleRatio };
   });
 
   return { polys, dims };

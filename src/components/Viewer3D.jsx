@@ -220,10 +220,13 @@ export default function Viewer3D({ model, activeField, ariaLabel, ref }) {
  * Cota projetada: linha com traços nas pontas e rótulo afastado do centro
  */
 function Dimension({ dim, activeField }) {
+  // Cota vista de ponta (ex: C na vista de seção) não tem como ser lida
+  if (dim.visibleRatio < 0.15) return null;
+
   const dx = dim.x2 - dim.x1;
   const dy = dim.y2 - dim.y1;
-  const length = Math.hypot(dx, dy);
-  if (length < 4) return null; // cota vista de topo (ex: C na vista de seção)
+  // Cota muito curta (espessura fina) mantém uma direção para o rótulo
+  const length = Math.hypot(dx, dy) || 1;
 
   const isActive = dim.fields.includes(activeField);
   const isMuted = Boolean(activeField) && !isActive;
