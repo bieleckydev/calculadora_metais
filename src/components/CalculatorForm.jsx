@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Sliders, HelpCircle, AlertTriangle, ArrowRightLeft } from 'lucide-react';
+import { Sliders, AlertTriangle } from 'lucide-react';
 import { parseDimensionValue } from '../utils/calculations';
 
 export default function CalculatorForm({

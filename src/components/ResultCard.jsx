@@ -6,8 +6,7 @@ export default function ResultCard({
   results,
   selectedMetal,
   selectedShape,
-  inputs,
-  activeField
+  inputs
 }) {
   const [copied, setCopied] = useState(false);
 

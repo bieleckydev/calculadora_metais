@@ -27,8 +27,7 @@ const FIELD_DESCRIPTIONS = {
 };
 
 
-export default function TechnicalDiagram({ shapeId, activeField, inputs }) {
-  // viewMode removed – always 3D
+export default function TechnicalDiagram({ shapeId, activeField }) {
   const [userRotationAngle, setUserRotationAngle] = useState(0);
 
   const isFocused = (fieldKey) => activeField === fieldKey;
@@ -583,16 +582,6 @@ export default function TechnicalDiagram({ shapeId, activeField, inputs }) {
         );
       }
     }
-  };
-
-  const render2DSvg = () => {
-    return (
-      <g transform="translate(140, 105)">
-        <circle cx="0" cy="0" r="60" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" strokeWidth="3" />
-        <line x1="-60" y1="0" x2="60" y2="0" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="3 3" />
-        <text x="0" y="-8" fill="#fff" fontSize="12" fontWeight="700" textAnchor="middle">Seção 2D (Corte)</text>
-      </g>
-    );
   };
 
   return (

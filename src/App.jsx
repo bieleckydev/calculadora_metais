@@ -138,7 +138,6 @@ export default function App() {
             <TechnicalDiagram
               shapeId={selectedShape.id}
               activeField={activeField}
-              inputs={inputs}
             />
           </div>
         </div>
@@ -169,7 +168,6 @@ export default function App() {
               selectedMetal={selectedMetal}
               selectedShape={selectedShape}
               inputs={inputs}
-              activeField={activeField}
             />
           </div>
         </div>
