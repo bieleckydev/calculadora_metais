@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Header from './components/Header';
 import ShapeSelector from './components/ShapeSelector';
 import CalculatorForm from './components/CalculatorForm';
@@ -7,7 +7,7 @@ import TechnicalDiagram from './components/TechnicalDiagram';
 import FooterERP from './components/FooterERP';
 import { METALS } from './data/metals';
 import { SHAPES } from './data/shapes';
-import { calculateMetalWeight } from './utils/calculations';
+import { calculateMetalWeight, formatNumber } from './utils/calculations';
 
 
 export default function App() {
@@ -55,25 +55,43 @@ export default function App() {
     });
   }, [selectedShape, inputs, selectedMetal, quantity, lossMarginPct]);
 
+  // Aviso exibido no rodapé após enviar ou limpar
+  const [notice, setNotice] = useState(null);
+  const noticeTimer = useRef(null);
+
+  const showNotice = useCallback((text, tone = 'success') => {
+    clearTimeout(noticeTimer.current);
+    setNotice({ text, tone });
+    noticeTimer.current = setTimeout(() => setNotice(null), 4000);
+  }, []);
+
+  useEffect(() => () => clearTimeout(noticeTimer.current), []);
+
   // ERP Injection Action
-  const handleInjectOrder = () => {
+  const handleInjectOrder = useCallback(() => {
     if (!results.isValid) return;
-    alert(`Item injetado no Pedido/Cotação!\nPeso Total: ${results.totalWeightKg.toFixed(2)} kg`);
-  };
+    // Ponto de integração com o ERP: aqui o item seria enviado ao Pedido/Cotação
+    showNotice(`Item enviado ao pedido: ${formatNumber(results.totalWeightKg, 2)} kg`);
+  }, [results, showNotice]);
 
   // Cancel Action
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     handleSelectShape(selectedShape);
-  };
+    showNotice('Campos limpos', 'neutral');
+  }, [selectedShape, showNotice]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Keyboard Shortcuts (Enter, Esc, Alt+P)
+  // Atalhos: Enter (em um campo do formulário), Alt+P (qualquer lugar), Esc (limpar)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         handleCancel();
+        return;
       }
-      if (e.key === 'Enter' && !e.shiftKey) {
+      const inFormField = e.target instanceof HTMLInputElement;
+      if (e.key === 'Enter' && !e.shiftKey && inFormField) {
+        e.preventDefault();
         handleInjectOrder();
+        return;
       }
       if (e.altKey && e.key.toLowerCase() === 'p') {
         e.preventDefault();
@@ -83,7 +101,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [results]);
+  }, [handleInjectOrder, handleCancel]);
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-dark)' }}>
@@ -162,6 +180,7 @@ export default function App() {
         onCancel={handleCancel}
         onInject={handleInjectOrder}
         isValid={results.isValid}
+        notice={notice}
       />
     </div>
   );

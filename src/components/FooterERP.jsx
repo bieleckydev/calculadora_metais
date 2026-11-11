@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import softcompHorizontal from '../assets/SOFTCOMP-Logo-horizontal.png';
 import bieleckyRaw from '../assets/bielecky.dev.jpg';
 
-export default function FooterERP() {
+export default function FooterERP({ onCancel, onInject, isValid, notice }) {
   const [transparentBieleckyUrl, setTransparentBieleckyUrl] = useState(null);
   const showBieleckyLogo = false; // Oculto por enquanto
 
@@ -84,25 +84,31 @@ export default function FooterERP() {
   }, [showBieleckyLogo]);
 
   return (
-    <footer style={{
-      borderTop: '1px solid var(--border-color)',
-      background: 'rgba(17, 18, 20, 0.97)',
-      backdropFilter: 'blur(16px)',
-      padding: '0.75rem 2rem',
-      position: 'sticky',
-      bottom: 0,
-      zIndex: 100,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: showBieleckyLogo ? 'space-between' : 'center'
-    }}>
+    <footer className="erp-footer">
       {/* SOFTCOMP Logo */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className="erp-footer__brand">
         <img
           src={softcompHorizontal}
           alt="SOFTCOMP"
           style={{ height: '22px', width: 'auto', opacity: 0.85 }}
         />
+      </div>
+
+      <div className="erp-footer__actions">
+        <p
+          className={`erp-footer__status${notice ? ` erp-footer__status--${notice.tone}` : ''}`}
+          role="status"
+          aria-live="polite"
+        >
+          {notice ? notice.text : (isValid ? '' : 'Preencha as dimensões para enviar')}
+        </p>
+
+        <button type="button" className="btn btn-outline" onClick={onCancel}>
+          Limpar <kbd>Esc</kbd>
+        </button>
+        <button type="button" className="btn btn-primary" onClick={onInject} disabled={!isValid}>
+          Enviar ao pedido <kbd>Enter</kbd>
+        </button>
       </div>
 
       {/* Canto Direito Inferior (Total Oposto): bielecky.dev Logo (Oculto por enquanto) */}
