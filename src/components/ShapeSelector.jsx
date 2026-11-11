@@ -128,7 +128,7 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '1rem',
         marginBottom: '1.25rem'
@@ -203,7 +203,7 @@ export default function ShapeSelector({ selectedShape, onSelectShape }) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justify: 'center',
+                justifyContent: 'center',
                 gap: '0.65rem',
                 position: 'relative',
                 boxShadow: isSelected ? '0 0 14px rgba(184, 115, 51, 0.20)' : 'none'

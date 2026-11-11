@@ -59,7 +59,7 @@ export default function CalculatorForm({
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '0.5rem',
         marginBottom: '1.25rem'

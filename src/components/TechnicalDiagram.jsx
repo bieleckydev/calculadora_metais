@@ -600,7 +600,7 @@ export default function TechnicalDiagram({ shapeId, activeField, inputs }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '0.5rem',
         marginBottom: '0.75rem'
@@ -661,7 +661,7 @@ export default function TechnicalDiagram({ shapeId, activeField, inputs }) {
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
-        justify: 'center'
+        justifyContent: 'center'
       }}>
         <svg width="280" height="220" viewBox="0 0 280 220" style={{ width: '100%', height: '100%' }}>
           <defs>

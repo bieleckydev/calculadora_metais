@@ -29,7 +29,7 @@ export default function Header({
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '1.25rem'
       }}>
@@ -43,7 +43,7 @@ export default function Header({
             borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
-            justify: 'center'
+            justifyContent: 'center'
           }}>
             <img
               src={softcompIcon}

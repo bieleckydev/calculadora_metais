@@ -20,7 +20,7 @@ export default function MetalSelector({ selectedMetal, onSelectMetal }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '1rem',
         marginBottom: '1.2rem'
@@ -92,7 +92,7 @@ export default function MetalSelector({ selectedMetal, onSelectMetal }) {
                 transition: 'all 0.2s ease',
                 display: 'flex',
                 flexDirection: 'column',
-                justify: 'space-between',
+                justifyContent: 'space-between',
                 gap: '0.5rem'
               }}
             >
@@ -113,7 +113,7 @@ export default function MetalSelector({ selectedMetal, onSelectMetal }) {
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                justify: 'space-between',
+                justifyContent: 'space-between',
                 fontSize: '0.82rem',
                 color: isSelected ? 'var(--accent-copper)' : 'var(--text-secondary)',
                 fontWeight: 700
