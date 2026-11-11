@@ -172,6 +172,10 @@ export function calculateMetalWeight({
     };
   }
 
+  // Validação física roda antes: o erro aparece assim que os campos
+  // envolvidos são preenchidos, sem esperar os demais
+  const physicalCheck = validatePhysicalConstraints(shape.id, inputs);
+
   const missingInputs = shape.inputs.some(f => {
     const val = inputs[f.id];
     return val === undefined || val === null || val === '' || parseDimensionValue(val) <= 0;
@@ -187,11 +191,10 @@ export function calculateMetalWeight({
       totalPrice: 0,
       quantity: Math.max(1, parseInt(quantity) || 1),
       isValid: false,
-      errors: {}
+      errors: physicalCheck.errors
     };
   }
 
-  const physicalCheck = validatePhysicalConstraints(shape.id, inputs);
   if (!physicalCheck.isValid) {
     return {
       volumeMm3: 0,
