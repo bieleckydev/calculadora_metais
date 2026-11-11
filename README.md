@@ -71,7 +71,7 @@ Caso você deseje utilizar e incorporar esta calculadora inteira em **seu própr
 
 | Recurso | Descrição |
 | :--- | :--- |
-| 🎲 **Visualizador 3D Isométrico** | Modelo 3D vetorial SVG que reorienta a câmera ($X, Y, Z$) e ilumina a cota ativa (Comprimento, Diâmetro, Largura, Espessura). |
+| 🎲 **Visualizador 3D Livre** | Modelo 3D em SVG feito com as medidas digitadas: arraste para girar, pinça ou roda para zoom, cotas presas à peça e destaque da cota do campo em foco. |
 | 🛡️ **Guardrails Físicos Automáticos** | Validação em tempo real impedindo geometrias impossíveis ($D_{int} \ge D_{ext}$, $e \ge A$, $2tf \ge H$). |
 | 📐 **Conversão Automática de Polegadas** | Identifica polegadas (ex: `1/2"`, `3/8`, `1 1/2`, `1-1/2`, `2in`) e converte para milímetros ($mm$) ao sair do campo. |
 | 📦 **Margem de Perda** | Configuração rápida de percentual de retalho/perda ($\ge 0\%$; vazio = $0\%$). |
@@ -123,9 +123,13 @@ Tabela de densidades ($\rho$) industriais cadastradas e editáveis:
 
 ## 🎲 Esquema Técnico 3D Interativo
 
-O componente `TechnicalDiagram.jsx` oferece:
-- **Câmera 3D Reclinável**: Ao focar no campo *Comprimento ($C$)*, o modelo ajusta o ângulo para demonstrar a extrusão longitudinal no eixo Z.
-- **Rotação Manual**: Botão <kbd>Girar 3D</kbd> para girar o modelo em passos de $30^\circ$.
+O `TechnicalDiagram.jsx` mostra a peça em 3D com um motor próprio, sem bibliotecas (`src/utils/scene3d.js` + `Viewer3D.jsx`):
+- **Medidas reais**: a seção é montada com os valores digitados (campo vazio usa o padrão da geometria). Peças longas aparecem encurtadas, mas a cota mostra o valor real; paredes muito finas ganham uma espessura mínima visível.
+- **Câmera livre**: arraste para girar; pinça (celular/touchpad) ou roda do mouse para zoom. A roda só dá zoom depois de clicar no desenho ou com <kbd>Ctrl</kbd>, para não atrapalhar a rolagem da página.
+- **Vistas prontas**: botões <kbd>Seção</kbd> (seção de frente) e <kbd>Vista 3D</kbd>; duplo clique também volta à vista inicial.
+- **Teclado**: com o desenho em foco, setas giram, <kbd>+</kbd>/<kbd>−</kbd> dão zoom e <kbd>0</kbd> volta à vista inicial.
+- **Cotas**: presas à peça, com o valor digitado; a cota do campo em foco fica destacada.
+- **Desempenho**: projeção ortográfica com 6 a ~90 faces por peça (0,02–0,24 ms por quadro) e no máximo um redesenho por quadro durante o arraste.
 
 ---
 
@@ -161,14 +165,16 @@ calculadora_metais/
 │   │   ├── Header.jsx           # Cabeçalho sticky com marca e seletores de liga/densidade
 │   │   ├── ShapeSelector.jsx    # Cartões vetoriais de seleção de geometria
 │   │   ├── CalculatorForm.jsx   # Formulário limpo de dimensões e quantidade com auto-conversão
-│   │   ├── TechnicalDiagram.jsx # Esquema Técnico 3D isométrico e cotas
+│   │   ├── TechnicalDiagram.jsx # Painel do esquema técnico (vistas prontas e descrição da cota)
+│   │   ├── Viewer3D.jsx         # Visualizador 3D interativo (girar, zoom, cotas)
 │   │   ├── ResultCard.jsx       # Painel de resultados em tempo real
 │   │   └── FooterERP.jsx        # Rodapé com a marca Softcomp e o peso total em telas estreitas
 │   ├── data/
 │   │   ├── metals.js            # Tabela de materiais e densidades g/cm³
 │   │   └── shapes.js            # Especificação JSON de geometrias e calculadores
 │   └── utils/
-│       └── calculations.js      # Calculador de peso, auto-conversor de frações e guardrails
+│       ├── calculations.js      # Calculador de peso, auto-conversor de frações e guardrails
+│       └── scene3d.js           # Motor 3D: seções, extrusão, cotas e projeção
 ├── tests/                       # Testes das fórmulas, do conversor e das validações (npm test)
 ```
 
