@@ -44,7 +44,7 @@ export const DENSIDADES = {
   "pvc_rigido": 1.40,
 
   // Outros Materiais de Engenharia
-  "fibra_de_carbono": 1.75,
+  "fibra_de_carbono": 1.60, // laminado carbono/epóxi (a fibra pura tem ~1,75–1,80)
   "vidro_comum": 2.50
 };
 
@@ -94,7 +94,7 @@ export const METALS_METADATA = [
   { id: 'pvc_rigido', name: 'PVC Rígido', category: 'Plásticos e Polímeros Técnicos', description: 'Termoplástico versátil e auto-extinguível.' },
 
   // Outros Materiais de Engenharia
-  { id: 'fibra_de_carbono', name: 'Fibra de Carbono (Composto)', category: 'Outros Materiais de Engenharia', description: 'Material composto de altíssima rigidez e ultraleve.' },
+  { id: 'fibra_de_carbono', name: 'Fibra de Carbono (Composto)', category: 'Outros Materiais de Engenharia', description: 'Laminado carbono/epóxi (~60% fibra) de altíssima rigidez e ultraleve.' },
   { id: 'vidro_comum', name: 'Vidro Comum (Silicato)', category: 'Outros Materiais de Engenharia', description: 'Material cerâmico inorgânico transparente.' }
 ];
 
