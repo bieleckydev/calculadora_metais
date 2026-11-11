@@ -50,52 +50,52 @@ export const DENSIDADES = {
 
 export const METALS_METADATA = [
   // Metais Ferrosos e Aços
-  { id: 'aco_carbono', name: 'Aço Carbono / Estrutural', category: 'Metais Ferrosos e Aços', color: '#94a3b8', description: 'Aço SAE 1020/1045, A36 e ligas de construção mecânica.' },
-  { id: 'aco_ferramenta', name: 'Aço Ferramenta', category: 'Metais Ferrosos e Aços', color: '#94a3b8', description: 'Aços para matrizes, moldes e ferramentas de corte (Ex: D2, O1, M2).' },
-  { id: 'aco_galvanizado', name: 'Aço Galvanizado', category: 'Metais Ferrosos e Aços', color: '#94a3b8', description: 'Aço carbono revestido com camada protetora de zinco.' },
-  { id: 'aco_inox_304', name: 'Aço Inox 304', category: 'Metais Ferrosos e Aços', color: '#cbd5e1', description: 'Aço inoxidável austenítico resistente à corrosão padrão.' },
-  { id: 'aco_inox_316', name: 'Aço Inox 316', category: 'Metais Ferrosos e Aços', color: '#cbd5e1', description: 'Aço inox de alta resistência química e marinha com molibdênio.' },
-  { id: 'aco_inox_430', name: 'Aço Inox 430', category: 'Metais Ferrosos e Aços', color: '#cbd5e1', description: 'Aço inoxidável ferrítico magnético de boa conformabilidade.' },
-  { id: 'ferro_fundido_cinzento', name: 'Ferro Fundido Cinzento', category: 'Metais Ferrosos e Aços', color: '#64748b', description: 'Excelente amortecimento de vibrações e fácil usinabilidade.' },
-  { id: 'ferro_fundido_nodular', name: 'Ferro Fundido Nodular', category: 'Metais Ferrosos e Aços', color: '#64748b', description: 'Maior tenacidade e ductilidade comparado ao cinzento.' },
-  { id: 'ferro_puro', name: 'Ferro Puro (Fe)', category: 'Metais Ferrosos e Aços', color: '#475569', description: 'Elemento ferro primário sem adições significante de liga.' },
+  { id: 'aco_carbono', name: 'Aço Carbono / Estrutural', category: 'Metais Ferrosos e Aços', description: 'Aço SAE 1020/1045, A36 e ligas de construção mecânica.' },
+  { id: 'aco_ferramenta', name: 'Aço Ferramenta', category: 'Metais Ferrosos e Aços', description: 'Aços para matrizes, moldes e ferramentas de corte (Ex: D2, O1, M2).' },
+  { id: 'aco_galvanizado', name: 'Aço Galvanizado', category: 'Metais Ferrosos e Aços', description: 'Aço carbono revestido com camada protetora de zinco.' },
+  { id: 'aco_inox_304', name: 'Aço Inox 304', category: 'Metais Ferrosos e Aços', description: 'Aço inoxidável austenítico resistente à corrosão padrão.' },
+  { id: 'aco_inox_316', name: 'Aço Inox 316', category: 'Metais Ferrosos e Aços', description: 'Aço inox de alta resistência química e marinha com molibdênio.' },
+  { id: 'aco_inox_430', name: 'Aço Inox 430', category: 'Metais Ferrosos e Aços', description: 'Aço inoxidável ferrítico magnético de boa conformabilidade.' },
+  { id: 'ferro_fundido_cinzento', name: 'Ferro Fundido Cinzento', category: 'Metais Ferrosos e Aços', description: 'Excelente amortecimento de vibrações e fácil usinabilidade.' },
+  { id: 'ferro_fundido_nodular', name: 'Ferro Fundido Nodular', category: 'Metais Ferrosos e Aços', description: 'Maior tenacidade e ductilidade comparado ao cinzento.' },
+  { id: 'ferro_puro', name: 'Ferro Puro (Fe)', category: 'Metais Ferrosos e Aços', description: 'Elemento ferro primário sem adições significante de liga.' },
 
   // Ligas de Cobre
-  { id: 'bronze_comum', name: 'Bronze Comum / Comercial', category: 'Ligas de Cobre', color: '#d97706', description: 'Liga de Cobre e Estanho resistente ao desgaste e corrosão.' },
-  { id: 'bronze_aluminio', name: 'Bronze Alumínio', category: 'Ligas de Cobre', color: '#d97706', description: 'Liga de alta resistência mecânica e à corrosão por água do mar.' },
-  { id: 'cobre_puro', name: 'Cobre Puro (Cu)', category: 'Ligas de Cobre', color: '#e07a5f', description: 'Excepcional condutividade elétrica e térmica.' },
-  { id: 'latao_amarelo', name: 'Latão Amarelo', category: 'Ligas de Cobre', color: '#f59e0b', description: 'Liga Cobre-Zinco versátil para estampagem e peças ornamentais.' },
-  { id: 'latao_comum', name: 'Latão Comum (C3600 / CLA)', category: 'Ligas de Cobre', color: '#f59e0b', description: 'Excelente usinabilidade em tornos automáticos e CNC.' },
+  { id: 'bronze_comum', name: 'Bronze Comum / Comercial', category: 'Ligas de Cobre', description: 'Liga de Cobre e Estanho resistente ao desgaste e corrosão.' },
+  { id: 'bronze_aluminio', name: 'Bronze Alumínio', category: 'Ligas de Cobre', description: 'Liga de alta resistência mecânica e à corrosão por água do mar.' },
+  { id: 'cobre_puro', name: 'Cobre Puro (Cu)', category: 'Ligas de Cobre', description: 'Excepcional condutividade elétrica e térmica.' },
+  { id: 'latao_amarelo', name: 'Latão Amarelo', category: 'Ligas de Cobre', description: 'Liga Cobre-Zinco versátil para estampagem e peças ornamentais.' },
+  { id: 'latao_comum', name: 'Latão Comum (C3600 / CLA)', category: 'Ligas de Cobre', description: 'Excelente usinabilidade em tornos automáticos e CNC.' },
 
   // Ligas de Alumínio
-  { id: 'aluminio_puro', name: 'Alumínio Puro (Al)', category: 'Ligas de Alumínio', color: '#38bdf8', description: 'Elevada condutividade e resistência à corrosão.' },
-  { id: 'aluminio_6061', name: 'Alumínio 6061', category: 'Ligas de Alumínio', color: '#38bdf8', description: 'Liga estrutural tratável termicamente de uso geral e naval.' },
-  { id: 'aluminio_7075', name: 'Alumínio 7075 (Ergal)', category: 'Ligas de Alumínio', color: '#38bdf8', description: 'Liga de altíssima resistência mecânica de uso aeronáutico.' },
+  { id: 'aluminio_puro', name: 'Alumínio Puro (Al)', category: 'Ligas de Alumínio', description: 'Elevada condutividade e resistência à corrosão.' },
+  { id: 'aluminio_6061', name: 'Alumínio 6061', category: 'Ligas de Alumínio', description: 'Liga estrutural tratável termicamente de uso geral e naval.' },
+  { id: 'aluminio_7075', name: 'Alumínio 7075 (Ergal)', category: 'Ligas de Alumínio', description: 'Liga de altíssima resistência mecânica de uso aeronáutico.' },
 
   // Outros Metais e Ligas Industriais
-  { id: 'chumbo', name: 'Chumbo (Pb)', category: 'Outros Metais Industriais', color: '#64748b', description: 'Metal pesado macio usado em proteção radiológica e contrapesos.' },
-  { id: 'estanho', name: 'Estanho (Sn)', category: 'Outros Metais Industriais', color: '#94a3b8', description: 'Metal maleável usado em soldas elétricas e revestimentos.' },
-  { id: 'magnésio', name: 'Magnésio (Mg)', category: 'Outros Metais Industriais', color: '#a855f7', description: 'Metal estrutural mais leve existente na indústria.' },
-  { id: 'niquel', name: 'Níquel (Ni)', category: 'Outros Metais Industriais', color: '#94a3b8', description: 'Metal resistente a altas temperaturas e meio corrosivo.' },
-  { id: 'ouro', name: 'Ouro Puro 24k (Au)', category: 'Outros Metais Industriais', color: '#eab308', description: 'Metal precioso inoxidável de altíssima densidade.' },
-  { id: 'prata', name: 'Prata Pura (Ag)', category: 'Outros Metais Industriais', color: '#e2e8f0', description: 'Maior condutividade elétrica e térmica de todos os metais.' },
-  { id: 'titanio_grau_5', name: 'Titânio Grau 5 (Ti-6Al-4V)', category: 'Outros Metais Industriais', color: '#a855f7', description: 'Liga de titânio aeroespacial e médica de alta resistência.' },
-  { id: 'titanio_puro', name: 'Titânio Puro Grau 2', category: 'Outros Metais Industriais', color: '#a855f7', description: 'Titânio comercialmente puro para indústria química e médica.' },
-  { id: 'zinco', name: 'Zinco (Zn)', category: 'Outros Metais Industriais', color: '#71717a', description: 'Utilizado principalmente em galvanização e fundição Zamak.' },
+  { id: 'chumbo', name: 'Chumbo (Pb)', category: 'Outros Metais Industriais', description: 'Metal pesado macio usado em proteção radiológica e contrapesos.' },
+  { id: 'estanho', name: 'Estanho (Sn)', category: 'Outros Metais Industriais', description: 'Metal maleável usado em soldas elétricas e revestimentos.' },
+  { id: 'magnésio', name: 'Magnésio (Mg)', category: 'Outros Metais Industriais', description: 'Metal estrutural mais leve existente na indústria.' },
+  { id: 'niquel', name: 'Níquel (Ni)', category: 'Outros Metais Industriais', description: 'Metal resistente a altas temperaturas e meio corrosivo.' },
+  { id: 'ouro', name: 'Ouro Puro 24k (Au)', category: 'Outros Metais Industriais', description: 'Metal precioso inoxidável de altíssima densidade.' },
+  { id: 'prata', name: 'Prata Pura (Ag)', category: 'Outros Metais Industriais', description: 'Maior condutividade elétrica e térmica de todos os metais.' },
+  { id: 'titanio_grau_5', name: 'Titânio Grau 5 (Ti-6Al-4V)', category: 'Outros Metais Industriais', description: 'Liga de titânio aeroespacial e médica de alta resistência.' },
+  { id: 'titanio_puro', name: 'Titânio Puro Grau 2', category: 'Outros Metais Industriais', description: 'Titânio comercialmente puro para indústria química e médica.' },
+  { id: 'zinco', name: 'Zinco (Zn)', category: 'Outros Metais Industriais', description: 'Utilizado principalmente em galvanização e fundição Zamak.' },
 
   // Plásticos e Polímeros Técnicos
-  { id: 'abs', name: 'Plástico ABS', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Termoplástico rígido de boa resistência a impactos.' },
-  { id: 'acrilico_pmma', name: 'Acrílico (PMMA)', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Polímero transparente de alta qualidade óptica.' },
-  { id: 'nylon_pa6', name: 'Nylon / Poliamida (PA 6)', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Plástico de engenharia para buchas, engrenagens e roletes.' },
-  { id: 'policarbonato_pc', name: 'Policarbonato (PC)', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Extremamente resistente a impactos e transparente.' },
-  { id: 'polietileno_pead', name: 'Polietileno (PEAD)', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Excelente resistência química e baixo coeficiente de atrito.' },
-  { id: 'polipropileno_pp', name: 'Polipropileno (PP)', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Polímero leve resistente a produtos químicos e fadiga.' },
-  { id: 'ptfe_teflon', name: 'Teflon (PTFE)', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Inércia química quase total e excelente anti-aderência.' },
-  { id: 'pvc_rigido', name: 'PVC Rígido', category: 'Plásticos e Polímeros Técnicos', color: '#10b981', description: 'Termoplástico versátil e auto-extinguível.' },
+  { id: 'abs', name: 'Plástico ABS', category: 'Plásticos e Polímeros Técnicos', description: 'Termoplástico rígido de boa resistência a impactos.' },
+  { id: 'acrilico_pmma', name: 'Acrílico (PMMA)', category: 'Plásticos e Polímeros Técnicos', description: 'Polímero transparente de alta qualidade óptica.' },
+  { id: 'nylon_pa6', name: 'Nylon / Poliamida (PA 6)', category: 'Plásticos e Polímeros Técnicos', description: 'Plástico de engenharia para buchas, engrenagens e roletes.' },
+  { id: 'policarbonato_pc', name: 'Policarbonato (PC)', category: 'Plásticos e Polímeros Técnicos', description: 'Extremamente resistente a impactos e transparente.' },
+  { id: 'polietileno_pead', name: 'Polietileno (PEAD)', category: 'Plásticos e Polímeros Técnicos', description: 'Excelente resistência química e baixo coeficiente de atrito.' },
+  { id: 'polipropileno_pp', name: 'Polipropileno (PP)', category: 'Plásticos e Polímeros Técnicos', description: 'Polímero leve resistente a produtos químicos e fadiga.' },
+  { id: 'ptfe_teflon', name: 'Teflon (PTFE)', category: 'Plásticos e Polímeros Técnicos', description: 'Inércia química quase total e excelente anti-aderência.' },
+  { id: 'pvc_rigido', name: 'PVC Rígido', category: 'Plásticos e Polímeros Técnicos', description: 'Termoplástico versátil e auto-extinguível.' },
 
   // Outros Materiais de Engenharia
-  { id: 'fibra_de_carbono', name: 'Fibra de Carbono (Composto)', category: 'Outros Materiais de Engenharia', color: '#ec4899', description: 'Material composto de altíssima rigidez e ultraleve.' },
-  { id: 'vidro_comum', name: 'Vidro Comum (Silicato)', category: 'Outros Materiais de Engenharia', color: '#ec4899', description: 'Material cerâmico inorgânico transparente.' }
+  { id: 'fibra_de_carbono', name: 'Fibra de Carbono (Composto)', category: 'Outros Materiais de Engenharia', description: 'Material composto de altíssima rigidez e ultraleve.' },
+  { id: 'vidro_comum', name: 'Vidro Comum (Silicato)', category: 'Outros Materiais de Engenharia', description: 'Material cerâmico inorgânico transparente.' }
 ];
 
 // Re-export METALS array with density merged from DENSIDADES constant
