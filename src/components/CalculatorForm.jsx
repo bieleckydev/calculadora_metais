@@ -15,20 +15,21 @@ export default function CalculatorForm({
   setActiveField,
   errors = {}
 }) {
-  if (!shape) return null;
-
   // ── Estado local: aba desigual para Perfil L / Cantoneira
   const [abaDesigual, setAbaDesigual] = useState(false);
+  const shapeId = shape?.id;
 
   // Reseta quando o shape muda (saímos do Perfil L)
   useEffect(() => {
-    if (shape.id !== 'perfil_l_cantoneira') {
+    if (shapeId !== 'perfil_l_cantoneira') {
       setAbaDesigual(false);
     } else if (!abaDesigual) {
       // Garante que aba_b seja limpa ao entrar no shape sem o toggle ativo
       onInputChange('aba_b', '');
     }
-  }, [shape.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [shapeId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!shape) return null;
 
   const handleAbaDesigualToggle = (checked) => {
     setAbaDesigual(checked);
