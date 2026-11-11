@@ -46,6 +46,8 @@ export default function App() {
 
   // Handle shape change (reset inputs to empty strings)
   const handleSelectShape = (shape) => {
+    // Clicar de novo na geometria atual não apaga o que já foi digitado
+    if (shape.id === selectedShape.id) return;
     setSelectedShape(shape);
     setAbaDesigual(false);
     const newInputs = {};
