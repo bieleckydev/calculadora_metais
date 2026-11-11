@@ -36,12 +36,14 @@ export default function App() {
     if (!checked) setInputs(prev => ({ ...prev, aba_b: '' }));
   };
 
-  // Ao trocar a família, a liga passa a ser a primeira da nova família,
+  // Ao trocar a família, mantém a liga atual se ela também pertence à nova
+  // família (ex: Inox 316 em "Ferrosos" → "Aço Inox"); senão usa a primeira,
   // para o cálculo usar a mesma densidade que o select mostra
   const handleSelectFamily = (family) => {
     setSelectedFamily(family);
-    const [firstMetal] = getMetalsByFamily(family);
-    if (firstMetal) setSelectedMetal(firstMetal);
+    const familyMetals = getMetalsByFamily(family);
+    if (familyMetals.some(m => m.id === selectedMetal.id)) return;
+    if (familyMetals[0]) setSelectedMetal(familyMetals[0]);
   };
 
   // Handle shape change (reset inputs to empty strings)
