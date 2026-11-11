@@ -441,6 +441,37 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
         );
       }
 
+      case 'tubo_retangular': {
+        const sideAFocused = isFocused('lado_maior');
+        const sideBFocused = isFocused('lado_menor');
+        const wallFocused = isThicknessFocused;
+        const sectionFocused = sideAFocused || sideBFocused;
+
+        return (
+          <g transform={`translate(${130 - extX * 0.3}, ${110 - extY * 0.3}) scale(${camera.scale})`}>
+            <polygon points={`-55,-32 ${-55 + extX},${-32 + extY} ${55 + extX},${-32 + extY} 55,-32`} fill="rgba(140, 156, 176, 0.1)" stroke={sideAFocused ? 'var(--diagram-focus)' : 'var(--diagram-edge)'} strokeWidth="1.5" />
+            <rect x="-55" y="-32" width="110" height="64" fill="rgba(17, 18, 20, 0.85)" stroke={sectionFocused ? 'var(--diagram-focus)' : 'var(--diagram-stroke)'} strokeWidth={sectionFocused ? '3.5' : '2.5'} />
+            <rect x="-42" y="-19" width="84" height="38" fill="var(--diagram-hole)" stroke={wallFocused ? 'var(--diagram-thickness)' : 'var(--diagram-dim)'} strokeWidth={wallFocused ? '3' : '2'} strokeDasharray={wallFocused ? 'none' : '3 2'} />
+            <polygon points={`55,-32 ${55 + extX},${-32 + extY} ${55 + extX},${32 + extY} 55,32`} fill="rgba(140, 156, 176, 0.05)" stroke={isLengthFocused ? 'var(--diagram-focus)' : 'var(--diagram-edge)'} strokeWidth={isLengthFocused ? '3' : '1.5'} />
+            <line x1="55" y1="-32" x2={55 + extX} y2={-32 + extY} stroke={isLengthFocused ? 'var(--diagram-focus)' : 'var(--diagram-dim)'} strokeWidth={isLengthFocused ? '3' : '1.5'} />
+            <text x={55 + extX / 2 + 10} y={-32 + extY / 2} fill={isLengthFocused ? 'var(--diagram-focus)' : 'var(--diagram-label)'} fontSize={isLengthFocused ? '12' : '10'} fontWeight="700">
+              C (Comprimento)
+            </text>
+            <line x1="-55" y1="-42" x2="55" y2="-42" stroke={sideAFocused ? 'var(--diagram-focus)' : 'var(--diagram-dim)'} strokeWidth={sideAFocused ? '2.5' : '1.5'} />
+            <text x="0" y="-47" fill={sideAFocused ? 'var(--diagram-focus)' : 'var(--diagram-label)'} fontSize={sideAFocused ? '12' : '10'} fontWeight="700" textAnchor="middle">
+              A (Lado Maior)
+            </text>
+            <line x1="-65" y1="-32" x2="-65" y2="32" stroke={sideBFocused ? 'var(--diagram-focus)' : 'var(--diagram-dim)'} strokeWidth={sideBFocused ? '2.5' : '1.5'} />
+            <text x="-70" y="4" fill={sideBFocused ? 'var(--diagram-focus)' : 'var(--diagram-label)'} fontSize={sideBFocused ? '12' : '10'} fontWeight="700" textAnchor="end">
+              B
+            </text>
+            <text x="0" y="46" fill={wallFocused ? 'var(--diagram-thickness)' : 'var(--diagram-label)'} fontSize={wallFocused ? '12' : '10'} fontWeight="700" textAnchor="middle">
+              e (Parede)
+            </text>
+          </g>
+        );
+      }
+
       case 'barra_sextavada': {
         const bitolaFocused = isFocused('bitola');
 
