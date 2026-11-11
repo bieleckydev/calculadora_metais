@@ -643,7 +643,10 @@ export default function TechnicalDiagram({ shapeId, activeField }) {
       </div>
 
       <div className="diagram-canvas">
-        <svg width="280" height="220" viewBox="0 0 280 220" role="img" aria-label={activeInfo ? `Esquema 3D com a cota ${activeInfo.label} em destaque` : 'Esquema 3D da geometria selecionada'}>
+        {/* viewBox de -30 a 330 em x: os rótulos de cota (ex: "C (Comprimento)")
+            e o modelo girado chegam a x ≈ -22 e x ≈ 320; com o viewBox antigo
+            (0 a 280) eram cortados em telas estreitas */}
+        <svg width="360" height="220" viewBox="-30 0 360 220" role="img" aria-label={activeInfo ? `Esquema 3D com a cota ${activeInfo.label} em destaque` : 'Esquema 3D da geometria selecionada'}>
           <defs>
             <pattern id="blueprint-grid" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="1" />
