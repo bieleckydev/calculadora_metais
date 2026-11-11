@@ -311,7 +311,8 @@ export const SHAPES = GEOMETRIAS_SPEC.geometrias.map(geom => ({
   descricaoFormula: geom.descricao_formula,
   inputs: geom.variaveis_entrada.map(v => ({
     id: v.id,
-    label: `${v.nome} (${v.unidade})`,
+    label: v.nome,
+    unit: v.unidade,
     simbolo: v.simbolo,
     default: v.default
   })),

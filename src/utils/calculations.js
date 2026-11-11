@@ -297,7 +297,7 @@ export function generateCommercialDescription({ shape, metal, inputs, results })
     dimStr = Object.values(inputs).map(v => formatVal(v)).join(' x ');
   }
 
-  return `${qty}x ${shape.name} ${metal.name} - ${dimStr} | Peso Est.: ${formatNumber(results.totalWeightKg, 2)} kg`;
+  return `${qty}x ${shape.name} ${metal.name} - ${dimStr} | Peso Est.: ${formatWeight(results.totalWeightKg)} kg`;
 }
 
 export function formatNumber(val, decimals = 2) {
@@ -306,6 +306,16 @@ export function formatNumber(val, decimals = 2) {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals
   }).format(val);
+}
+
+/**
+ * Peso em kg com precisão conforme o tamanho: abaixo de 1 kg usa 3 casas
+ * (0,008 kg em vez de 0,00 kg), acima usa 2
+ */
+export function formatWeight(kg) {
+  const abs = Math.abs(kg);
+  const decimals = abs > 0 && abs < 1 ? 3 : 2;
+  return formatNumber(kg, decimals);
 }
 
 export function formatCurrency(val) {

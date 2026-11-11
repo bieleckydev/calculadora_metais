@@ -43,7 +43,7 @@ A **Calculadora de Peso Teórico de Metais** da **SOFTCOMP** é um módulo front
 - **Operação por Atalhos de Teclado**: Navegação ultra-rápida via <kbd>Tab</kbd>, <kbd>Enter</kbd> (para injetar no ERP) e <kbd>Esc</kbd> (para cancelar).
 - **Digitação Limpa (Do Zero)**: Todos os campos de dimensão começam limpos sem placeholders para evitar erros operacionais.
 - **Conversão Automática de Frações**: Aceita decimais (ex: `12.7`) e converte automaticamente frações em polegadas (ex: `1/2"`, `3/8`, `1 1/2`) para milímetros ($mm$).
-- **Resultado Instantâneo**: Cálculo dinâmico em tempo real de Volume ($mm^3$), Volume ($cm^3$), Peso Unitário ($kg$), Peso Total com Margem de Perda ($kg$) e Preço Estimado ($R\$$).
+- **Resultado Instantâneo**: Cálculo dinâmico em tempo real de Volume ($mm^3$), Volume ($cm^3$), Peso Unitário ($kg$), e Peso Total com Margem de Perda ($kg$), com 3 casas decimais para peças abaixo de 1 kg.
 
 ---
 
@@ -52,7 +52,7 @@ A **Calculadora de Peso Teórico de Metais** da **SOFTCOMP** é um módulo front
 Caso você deseje utilizar e incorporar esta calculadora inteira em **seu próprio website, e-commerce, portal de clientes, intranet ou Landing Page**, o projeto disponibiliza uma versão **Single-File Standalone** (arquivo único `.html` totalmente independente).
 
 ### ⚡ Benefícios da Versão Standalone (`standalone/index.html`):
-- **100% Autônomo e Independente**: Todo o código React, CSS Glassmorphism, ícones, Esquema Técnico 3D, lógica matemática e logotipos em Base64 estão gravados dentro de um **único arquivo HTML**.
+- **100% Autônomo e Independente**: Todo o código React, CSS, ícones, Esquema Técnico 3D, lógica matemática e logotipos em Base64 estão gravados dentro de um **único arquivo HTML**.
 - **Zero Dependências de Servidor**: Não exige Node.js, npm ou infraestrutura backend.
 - **Instalação em Qualquer Website**: Basta copiar o arquivo `standalone/index.html` para a pasta do seu site ou incorporá-lo usando uma tag `<iframe>`:
   ```html
@@ -75,7 +75,7 @@ Caso você deseje utilizar e incorporar esta calculadora inteira em **seu própr
 | 🎲 **Visualizador 3D Isométrico** | Modelo 3D vetorial SVG que reorienta a câmera ($X, Y, Z$) e ilumina a cota ativa (Comprimento, Diâmetro, Largura, Espessura). |
 | 🛡️ **Guardrails Físicos Automáticos** | Validação em tempo real impedindo geometrias impossíveis ($D_{int} \ge D_{ext}$, $e \ge A$, $2tf \ge H$). |
 | 📐 **Conversão Automática de Frações** | Identifica frações de polegada (ex: `1/2"`, `3/8`, `1 1/2`) e converte instantaneamente para milímetros ($mm$). |
-| 📦 **Margem de Perda & Preço/kg** | Configuração rápida de percentual de retalho/perda ($0\% \text{ a } 30\%$) e custo por quilo. |
+| 📦 **Margem de Perda** | Configuração rápida de percentual de retalho/perda ($0\% \text{ a } 30\%$). |
 | 📝 **Gerador de Nomenclatura Comercial** | Padronização automática de descrição para itens de cotação/pedido ERP. |
 
 ---
@@ -134,9 +134,9 @@ O componente `TechnicalDiagram.jsx` oferece:
 ## 🛠️ Tecnologias Utilizadas
 
 - **Core**: React 19 + Vite 8
-- **Estilização**: Vanilla CSS3 com tokens de Design System (Glassmorphism, Dark Theme `#0b0f19`)
+- **Estilização**: Vanilla CSS3 com tokens de design (tema escuro grafite `#111214`, acentos cobre e aço)
 - **Ícones**: Lucide React
-- **Tipografia**: Google Fonts (*Outfit* e *Plus Jakarta Sans*)
+- **Tipografia**: Google Fonts (*Plus Jakarta Sans*)
 
 ---
 
@@ -154,7 +154,8 @@ calculadora_metais/
 ├── src/
 │   ├── main.jsx
 │   ├── App.jsx
-│   ├── index.css
+│   ├── index.css            # Tokens, base e botões
+│   ├── components.css       # Estilos dos componentes e regras responsivas
 │   ├── assets/
 │   │   ├── softcomp_logo.png
 │   │   └── SOFTCOMP-Logo-horizontal.png
@@ -163,8 +164,8 @@ calculadora_metais/
 │   │   ├── ShapeSelector.jsx    # Cartões vetoriais de seleção de geometria
 │   │   ├── CalculatorForm.jsx   # Formulário limpo de dimensões e quantidade com auto-conversão
 │   │   ├── TechnicalDiagram.jsx # Esquema Técnico 3D isométrico e cotas
-│   │   ├── ResultCard.jsx       # Painel de resultados em tempo real e preço
-│   │   └── FooterERP.jsx        # Rodapé de branding Softcomp
+│   │   ├── ResultCard.jsx       # Painel de resultados em tempo real
+│   │   └── FooterERP.jsx        # Rodapé com ações (Limpar / Enviar ao pedido) e marca Softcomp
 │   ├── data/
 │   │   ├── metals.js            # Tabela de materiais e densidades g/cm³
 │   │   └── shapes.js            # Especificação JSON de geometrias e calculadores

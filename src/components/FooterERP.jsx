@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import softcompHorizontal from '../assets/SOFTCOMP-Logo-horizontal.png';
-import { formatNumber } from '../utils/calculations';
+import { formatWeight } from '../utils/calculations';
 
 export default function FooterERP({ onCancel, onInject, isValid, totalWeightKg, notice }) {
   const [transparentBieleckyUrl, setTransparentBieleckyUrl] = useState(null);
@@ -100,7 +100,7 @@ export default function FooterERP({ onCancel, onInject, isValid, totalWeightKg, 
       {/* Total compacto: só aparece em telas estreitas, onde o card de resultado fica fora da vista */}
       <div className="erp-footer__total num" aria-hidden="true">
         <span>Total</span>
-        <strong>{isValid ? `${formatNumber(totalWeightKg, 2)} kg` : '—'}</strong>
+        <strong>{isValid ? `${formatWeight(totalWeightKg)} kg` : '—'}</strong>
       </div>
 
       <div className="erp-footer__actions">

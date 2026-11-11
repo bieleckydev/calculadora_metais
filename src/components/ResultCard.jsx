@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { formatNumber, generateCommercialDescription } from '../utils/calculations';
+import { formatWeight, generateCommercialDescription } from '../utils/calculations';
 import { Copy, Check } from 'lucide-react';
 
 export default function ResultCard({
@@ -58,14 +58,14 @@ export default function ResultCard({
       <section className="panel" aria-label="Resultado do cálculo">
         <span className="result__label">Peso unitário</span>
         <div className="result__unit-weight num">
-          {isValid ? formatNumber(weightKg, 2) : '--.--'} <span className="result__suffix">kg/pç</span>
+          {isValid ? formatWeight(weightKg) : '—'} <span className="result__suffix">kg/pç</span>
         </div>
 
         <div className="result__divider" />
 
         <span className="result__label" id="peso-total-label">Peso total bruto</span>
         <div className="result__total num" aria-live="polite" aria-atomic="true" aria-labelledby="peso-total-label">
-          {isValid ? formatNumber(totalWeightKg, 2) : '--.--'} <span className="result__suffix">kg</span>
+          {isValid ? formatWeight(totalWeightKg) : '—'} <span className="result__suffix">kg</span>
         </div>
       </section>
 

@@ -659,3 +659,9 @@
     display: none;
   }
 }
+
+.panel__help {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}

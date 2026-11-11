@@ -110,7 +110,6 @@ export default function CalculatorForm({
     type: 'text',
     inputMode: 'decimal',
     autoComplete: 'off',
-    placeholder: '0.00 ou 1/2"',
     value: inputs[fieldId] !== undefined ? inputs[fieldId] : '',
     onChange: (val) => onInputChange(fieldId, val),
     onFocus: () => setActiveField(fieldId),
@@ -125,6 +124,7 @@ export default function CalculatorForm({
           <Sliders size={18} />
           Dimensões <span className="panel__title-sub">· {shape.name}</span>
         </h2>
+        <p className="panel__help">Em mm. Também aceita polegadas: 1/2, 1 1/2 ou 2"</p>
       </div>
 
       <div className="field-grid">
@@ -137,7 +137,7 @@ export default function CalculatorForm({
             <UnitField
               key={field.id}
               label={field.label}
-              unit="mm"
+              unit={field.unit || 'mm'}
               hint={isFraction && liveMm > 0 ? `= ${liveMm.toFixed(2)} mm` : null}
               error={errors[field.id]}
               {...dimensionProps(field.id)}
@@ -172,9 +172,8 @@ export default function CalculatorForm({
               <UnitField
                 className="field--appear"
                 id="input-aba-b"
-                label="Aba B (mm)"
+                label="Largura da Aba B"
                 unit="mm"
-                hint="campo B"
                 error={errors.aba_b}
                 {...dimensionProps('aba_b')}
               />
@@ -193,7 +192,7 @@ export default function CalculatorForm({
         />
 
         <UnitField
-          label="Margem Perda (%)"
+          label="Margem de perda"
           unit="%"
           type="number"
           inputMode="decimal"

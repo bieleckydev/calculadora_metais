@@ -7,7 +7,7 @@ import TechnicalDiagram from './components/TechnicalDiagram';
 import FooterERP from './components/FooterERP';
 import { METALS, INOX_FAMILY, getMetalsByFamily } from './data/metals';
 import { SHAPES } from './data/shapes';
-import { calculateMetalWeight, formatNumber } from './utils/calculations';
+import { calculateMetalWeight, formatWeight } from './utils/calculations';
 
 
 export default function App() {
@@ -79,7 +79,7 @@ export default function App() {
   const handleInjectOrder = useCallback(() => {
     if (!results.isValid) return;
     // Ponto de integração com o ERP: aqui o item seria enviado ao Pedido/Cotação
-    showNotice(`Item enviado ao pedido: ${formatNumber(results.totalWeightKg, 2)} kg`);
+    showNotice(`Item enviado ao pedido: ${formatWeight(results.totalWeightKg)} kg`);
   }, [results, showNotice]);
 
   // Cancel Action
